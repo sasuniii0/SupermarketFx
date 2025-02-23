@@ -54,7 +54,7 @@ public class EmailSendeController {
 
     private void sendEmailWithSenderGrid(String from, String to, String subject, String body) {
         String USER_NAME = "apikey";
-        String PASSWORD = "Replace your api key";
+        String PASSWORD = "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";
 
         System.out.println("TLSEmail Start");
         Properties props = new Properties();
