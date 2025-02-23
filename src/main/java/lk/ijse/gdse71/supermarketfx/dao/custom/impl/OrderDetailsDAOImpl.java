@@ -1,12 +1,13 @@
 package lk.ijse.gdse71.supermarketfx.dao.custom.impl;
 
+import lk.ijse.gdse71.supermarketfx.dao.custom.OrderDetailDAO;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDetailsDto;
 import lk.ijse.gdse71.supermarketfx.dao.SQLUtil;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class OrderDetailsDAOImpl {
+public class OrderDetailsDAOImpl implements OrderDetailDAO {
 
      private final ItemDAOImpl itemDAOImpl = new ItemDAOImpl();
 

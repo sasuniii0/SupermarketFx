@@ -1,4 +1,6 @@
 package lk.ijse.gdse71.supermarketfx.bo.custom.impl;
 
-public class OrderBOImpl {
+import lk.ijse.gdse71.supermarketfx.bo.custom.OrderBO;
+
+public class OrderBOImpl implements OrderBO {
 }

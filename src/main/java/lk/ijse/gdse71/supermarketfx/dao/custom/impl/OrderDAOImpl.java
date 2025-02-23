@@ -1,5 +1,6 @@
 package lk.ijse.gdse71.supermarketfx.dao.custom.impl;
 
+import lk.ijse.gdse71.supermarketfx.dao.custom.OrderDAO;
 import lk.ijse.gdse71.supermarketfx.db.DBConnection;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDto;
 import lk.ijse.gdse71.supermarketfx.dao.SQLUtil;
@@ -8,7 +9,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class OrderDAOImpl {
+public class OrderDAOImpl implements OrderDAO {
 
     private final OrderDetailsDAOImpl orderDetailsDAOImpl = new OrderDetailsDAOImpl();
     public String getNextOrderId() throws SQLException {

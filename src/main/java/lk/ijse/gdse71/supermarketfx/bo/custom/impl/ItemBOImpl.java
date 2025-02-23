@@ -1,4 +1,6 @@
 package lk.ijse.gdse71.supermarketfx.bo.custom.impl;
 
-public class ItemBOImpl {
+import lk.ijse.gdse71.supermarketfx.bo.custom.ItemBO;
+
+public class ItemBOImpl implements ItemBO {
 }

@@ -1,5 +1,6 @@
 package lk.ijse.gdse71.supermarketfx.dao.custom.impl;
 
+import lk.ijse.gdse71.supermarketfx.dao.custom.ItemDAO;
 import lk.ijse.gdse71.supermarketfx.dto.ItemDto;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDetailsDto;
 import lk.ijse.gdse71.supermarketfx.dao.SQLUtil;
@@ -8,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ItemDAOImpl {
+public class ItemDAOImpl implements ItemDAO {
     public ArrayList<String> getAllItemIds() throws SQLException {
         ResultSet rst = SQLUtil.execute("select item_id from Item");
 

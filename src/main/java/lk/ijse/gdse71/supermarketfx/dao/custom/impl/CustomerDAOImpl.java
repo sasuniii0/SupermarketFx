@@ -1,5 +1,6 @@
 package lk.ijse.gdse71.supermarketfx.dao.custom.impl;
 
+import lk.ijse.gdse71.supermarketfx.dao.custom.CustomerDAO;
 import lk.ijse.gdse71.supermarketfx.dto.CustomerDto;
 import lk.ijse.gdse71.supermarketfx.dao.SQLUtil;
 
@@ -7,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class CustomerDAOImpl {
+public class CustomerDAOImpl implements CustomerDAO {
     public ArrayList<CustomerDto> getAllCustomers() throws SQLException {
         ResultSet rst = SQLUtil.execute("select * from Customer");
         ArrayList<CustomerDto> customerDtos = new ArrayList<>();
