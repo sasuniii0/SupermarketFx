@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.supermarketfx.controller.CustomerController">
+   <children>
+      <VBox prefHeight="600.0" prefWidth="700.0">
+         <children>
+            <VBox prefHeight="232.0" prefWidth="700.0">
+               <children>
+                  <HBox prefHeight="45.0" prefWidth="700.0">
+                     <children>
+                        <Label prefHeight="44.0" prefWidth="171.0" text="CustomerId" />
+                        <Label fx:id="LblCustId" prefHeight="49.0" prefWidth="531.0" text="1" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="45.0" prefWidth="700.0">
+                     <children>
+                        <Label prefHeight="32.0" prefWidth="172.0" text="Customer Name" />
+                        <TextField fx:id="TxtCustomerName" prefHeight="31.0" prefWidth="528.0" promptText="example" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="45.0" prefWidth="700.0">
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="172.0" text="Customer NIC" />
+                        <TextField fx:id="TxtNic" prefHeight="30.0" prefWidth="528.0" promptText="000000000000" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="45.0" prefWidth="700.0">
+                     <children>
+                        <Label prefHeight="26.0" prefWidth="174.0" text="Customer Email" />
+                        <TextField fx:id="TxtEmail" prefHeight="29.0" prefWidth="526.0" promptText="example@gmail.com" />
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="45.0" prefWidth="700.0">
+                     <children>
+                        <Label prefHeight="29.0" prefWidth="174.0" text="Customer Phone" />
+                        <TextField fx:id="TxtPhone" prefHeight="31.0" prefWidth="526.0" promptText="0700000000" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox prefHeight="41.0" prefWidth="700.0" spacing="20.0">
+               <children>
+                  <Button fx:id="BtnGenerateRep" mnemonicParsing="false" onAction="#GenerateRepOnClickAction" prefHeight="26.0" prefWidth="135.0" text="Generate Report" />
+                  <Button fx:id="BtnReset" mnemonicParsing="false" onAction="#ResetOnClickAction" prefHeight="26.0" prefWidth="135.0" text="Reset" />
+                  <Button fx:id="BtnDelete" mnemonicParsing="false" onAction="#DeleteOnClickAction" prefHeight="26.0" prefWidth="135.0" text="Delete" />
+                  <Button fx:id="BtnUpdate" mnemonicParsing="false" onAction="#UpdateOnClickAction" prefHeight="26.0" prefWidth="135.0" text="Update" />
+                  <Button fx:id="BtnSave" mnemonicParsing="false" onAction="#SaveOnClickAction" prefHeight="26.0" prefWidth="135.0" text="Save" />
+               </children>
+            </HBox>
+            <HBox prefHeight="33.0" prefWidth="700.0">
+               <children>
+                  <Button fx:id="BtnAllCustomerRep" mnemonicParsing="false" onAction="#AllCustomerRepOnClickAction" prefHeight="26.0" prefWidth="326.0" text="Generate All Customer Report" />
+                  <Button fx:id="BtnOpenMailSendMail" mnemonicParsing="false" onAction="#OpenMailAndSendMailClickOnAction" prefHeight="26.0" prefWidth="376.0" text="Open mail and send Mail" />
+               </children>
+            </HBox>
+            <TableView fx:id="TblCustomer" onMouseClicked="#ClickOnTable" prefHeight="295.0" prefWidth="700.0">
+              <columns>
+                <TableColumn fx:id="ColCustId" prefWidth="104.0" text="Customer Id" />
+                <TableColumn fx:id="ColCustName" minWidth="0.0" prefWidth="205.0" text="Customer Name" />
+                  <TableColumn fx:id="ColNic" prefWidth="116.0" text="NIC" />
+                  <TableColumn fx:id="ColEmail" prefWidth="151.0" text="Email" />
+                  <TableColumn fx:id="ColPhone" prefWidth="123.0" text="Phone" />
+              </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

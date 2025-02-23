@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.supermarketfx.controller.OrderController">
+   <children>
+      <VBox prefHeight="600.0" prefWidth="700.0">
+         <children>
+            <VBox prefHeight="256.0" prefWidth="700.0">
+               <children>
+                  <HBox prefHeight="53.0" prefWidth="700.0">
+                     <children>
+                        <HBox prefHeight="51.0" prefWidth="353.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="115.0" text="Order Id" />
+                              <Label fx:id="LblOrder" prefHeight="18.0" prefWidth="115.0" text="1" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="51.0" prefWidth="353.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="121.0" text="Order Date" />
+                              <Label fx:id="LblOrderDate" prefHeight="18.0" prefWidth="121.0" text="2024/10/5" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="53.0" prefWidth="700.0">
+                     <children>
+                        <HBox prefHeight="51.0" prefWidth="352.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="112.0" text="Customer Id" />
+                              <ComboBox fx:id="CmbCustId" onAction="#CmbCustomerOnClickAction" prefHeight="26.0" prefWidth="214.0" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="51.0" prefWidth="356.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="123.0" text="Customer Name" />
+                              <Label fx:id="LblCustName" prefHeight="18.0" prefWidth="123.0" text="name" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="53.0" prefWidth="700.0">
+                     <children>
+                        <HBox prefHeight="51.0" prefWidth="355.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="110.0" text="Item Id" />
+                              <ComboBox fx:id="CmbItemId" onAction="#CmbItemOnClickAction" prefHeight="26.0" prefWidth="219.0" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="51.0" prefWidth="355.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="123.0" text="Item Name" />
+                              <Label fx:id="LblItemName" prefHeight="18.0" prefWidth="123.0" text="name" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="53.0" prefWidth="700.0">
+                     <children>
+                        <HBox prefHeight="51.0" prefWidth="368.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="110.0" text="QTY" />
+                              <Label fx:id="LblQty" prefHeight="18.0" prefWidth="219.0" text="0" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="51.0" prefWidth="368.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="122.0" text="Unit Price" />
+                              <Label fx:id="LblUnitPrice" prefHeight="18.0" prefWidth="122.0" text="0.00" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="53.0" prefWidth="700.0">
+                     <children>
+                        <HBox prefHeight="52.0" prefWidth="416.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="109.0" text="Quantity" />
+                              <TextField fx:id="TxtQuantity" prefHeight="26.0" prefWidth="220.0" promptText="0" />
+                           </children>
+                        </HBox>
+                        <Button fx:id="BtnAddToCart" mnemonicParsing="false" onAction="#AddToCartOnClickAction" prefHeight="26.0" prefWidth="272.0" text="Add To Cart" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <TableView fx:id="TblOrder" onMouseClicked="#TblOnActionAction" prefHeight="283.0" prefWidth="700.0">
+              <columns>
+                <TableColumn fx:id="ColItemId" prefWidth="97.0" text="Item Id" />
+                <TableColumn fx:id="ColItemName" prefWidth="199.0" text="Item Name" />
+                  <TableColumn fx:id="ColQty" prefWidth="65.0" text="Qty" />
+                  <TableColumn fx:id="ColUnitPrice" prefWidth="133.0" text="Unit Price" />
+                  <TableColumn fx:id="ColTotal" prefWidth="90.0" text="Total" />
+                  <TableColumn fx:id="ColAction" prefWidth="115.0" text="Action" />
+              </columns>
+            </TableView>
+            <HBox prefHeight="35.0" prefWidth="700.0" spacing="50.0">
+               <children>
+                  <Button fx:id="BtnReset" mnemonicParsing="false" onAction="#ResetOnClickAction" prefHeight="26.0" prefWidth="203.0" text="Reset" />
+                  <Button fx:id="BtnGenerateRep" mnemonicParsing="false" onAction="#GenerateRepOnClickAction" prefHeight="26.0" prefWidth="203.0" text="Generate Report" />
+                  <Button fx:id="BtnPlaceOrder" mnemonicParsing="false" onAction="#PlaceOrderOnClickAction" prefHeight="26.0" prefWidth="203.0" text="Place Order" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Label layoutX="-2.0" layoutY="-38.0" text="Label" />
+   </children>
+</AnchorPane>

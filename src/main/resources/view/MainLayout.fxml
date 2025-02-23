@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane fx:id="AncPaneMain" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.supermarketfx.controller.MainLayoutController">
+   <children>
+      <Pane fx:id="PaneSide" prefHeight="600.0" prefWidth="200.0">
+         <children>
+            <Label fx:id="LblSuperMarket" layoutX="10.0" layoutY="22.0" prefHeight="33.0" prefWidth="185.0" text="Super Market">
+               <font>
+                  <Font name="System Bold Italic" size="28.0" />
+               </font>
+            </Label>
+            <VBox layoutX="23.0" layoutY="90.0" prefHeight="209.0" prefWidth="159.0">
+               <children>
+                  <Button fx:id="BtnCustomer" mnemonicParsing="false" onAction="#CustomerClickOnAction" prefHeight="47.0" prefWidth="159.0" text="Customer">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="BtnItem" mnemonicParsing="false" onAction="#ItemClickOnAction" prefHeight="47.0" prefWidth="159.0" text="Item">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="BtnOrders" mnemonicParsing="false" onAction="#OrdersClickOnACtion" prefHeight="47.0" prefWidth="159.0" text="Orders">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </Pane>
+      <AnchorPane fx:id="AncPaneSide" layoutX="200.0" prefHeight="600.0" prefWidth="700.0" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.gdse71.supermarketfx.controller.LoadingController">
+   <children>
+      <StackPane layoutX="8.0" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <ProgressIndicator prefHeight="104.0" prefWidth="107.0" />
+         </children>
+      </StackPane>
+   </children>
+</AnchorPane>
