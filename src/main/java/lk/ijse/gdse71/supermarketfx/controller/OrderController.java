@@ -12,10 +12,10 @@ import lk.ijse.gdse71.supermarketfx.dto.CustomerDto;
 import lk.ijse.gdse71.supermarketfx.dto.ItemDto;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDetailsDto;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDto;
-import lk.ijse.gdse71.supermarketfx.dto.tm.CartTm;
-import lk.ijse.gdse71.supermarketfx.model.CustomerModel;
-import lk.ijse.gdse71.supermarketfx.model.ItemModel;
-import lk.ijse.gdse71.supermarketfx.model.OrderModel;
+import lk.ijse.gdse71.supermarketfx.view.tdm.CartTm;
+import lk.ijse.gdse71.supermarketfx.dao.custom.impl.CustomerDAOImpl;
+import lk.ijse.gdse71.supermarketfx.dao.custom.impl.ItemDAOImpl;
+import lk.ijse.gdse71.supermarketfx.dao.custom.impl.OrderDAOImpl;
 
 import java.net.URL;
 import java.sql.Date;
@@ -86,9 +86,9 @@ public class OrderController implements Initializable {
     @FXML
     private TableView<CartTm> TblOrder;
 
-    private final OrderModel orderModel = new OrderModel();
-    private final CustomerModel customerModel = new CustomerModel();
-    private final ItemModel itemModel = new ItemModel();
+    private final OrderDAOImpl orderDAOImpl = new OrderDAOImpl();
+    private final CustomerDAOImpl customerModel = new CustomerDAOImpl();
+    private final ItemDAOImpl itemDAOImpl = new ItemDAOImpl();
 
     private final ObservableList<CartTm> cartTms = FXCollections.observableArrayList();
 
@@ -189,7 +189,7 @@ public class OrderController implements Initializable {
         );
         //boolean isSaved = orderModel.saveOrder(orderDto);
         System.out.println("Saving order: " + orderDto);
-        boolean isSaved = orderModel.saveOrder(orderDto);
+        boolean isSaved = orderDAOImpl.saveOrder(orderDto);
         System.out.println("Order saved status: " + isSaved);
 
         if (isSaved){
@@ -219,7 +219,7 @@ public class OrderController implements Initializable {
     @FXML
     void CmbItemOnClickAction(ActionEvent event) throws SQLException {
         String selecteItemId = CmbItemId.getSelectionModel().getSelectedItem();
-        ItemDto itemDto = itemModel.findById(selecteItemId);
+        ItemDto itemDto = itemDAOImpl.findById(selecteItemId);
 
         if (itemDto != null) {
             LblItemName.setText(itemDto.getItemName());
@@ -240,7 +240,7 @@ public class OrderController implements Initializable {
     }
 
     private void refreshPage() throws SQLException {
-        LblOrder.setText(orderModel.getNextOrderId());
+        LblOrder.setText(orderDAOImpl.getNextOrderId());
         LblOrderDate.setText(LocalDate.now().toString());
 
         loadCustomerIds();
@@ -259,7 +259,7 @@ public class OrderController implements Initializable {
     }
 
     private void loadItemId() throws SQLException {
-        ArrayList<String> itemIds = itemModel.getAllItemIds();
+        ArrayList<String> itemIds = itemDAOImpl.getAllItemIds();
         ObservableList<String> observableList = FXCollections.observableArrayList();
         observableList.addAll(itemIds);
         CmbItemId.setItems(observableList);

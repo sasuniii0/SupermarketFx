@@ -1,16 +1,16 @@
-package lk.ijse.gdse71.supermarketfx.dto.tm;
+package lk.ijse.gdse71.supermarketfx.entity;
 
 import lombok.*;
 
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class CustomerTm {
+public class Customer {
     private String customerId;
     private String customerName;
-    private  String nic;
+    private String nic;
     private String email;
     private String phone;
 }

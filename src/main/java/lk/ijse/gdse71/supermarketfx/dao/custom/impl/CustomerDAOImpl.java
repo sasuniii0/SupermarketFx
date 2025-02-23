@@ -1,15 +1,15 @@
-package lk.ijse.gdse71.supermarketfx.model;
+package lk.ijse.gdse71.supermarketfx.dao.custom.impl;
 
 import lk.ijse.gdse71.supermarketfx.dto.CustomerDto;
-import lk.ijse.gdse71.supermarketfx.util.CrudUtil;
+import lk.ijse.gdse71.supermarketfx.dao.SQLUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class CustomerModel {
+public class CustomerDAOImpl {
     public ArrayList<CustomerDto> getAllCustomers() throws SQLException {
-        ResultSet rst = CrudUtil.execute("select * from Customer");
+        ResultSet rst = SQLUtil.execute("select * from Customer");
         ArrayList<CustomerDto> customerDtos = new ArrayList<>();
 
         while (rst.next()) {
@@ -26,7 +26,7 @@ public class CustomerModel {
     }
 
     public boolean saveCustomer(CustomerDto customerDto) throws SQLException {
-        return CrudUtil.execute("insert into Customer values(?,?,?,?,?)",
+        return SQLUtil.execute("insert into Customer values(?,?,?,?,?)",
                 customerDto.getCustomerId(),
                 customerDto.getCustomerName(),
                 customerDto.getNic(),
@@ -35,7 +35,7 @@ public class CustomerModel {
         );
     }
     public String getNextCustomerId() throws SQLException {
-        ResultSet rst = CrudUtil.execute("select customer_id from Customer order by customer_id desc limit 1");
+        ResultSet rst = SQLUtil.execute("select customer_id from Customer order by customer_id desc limit 1");
 
         if (rst.next()) {
             String lastId = rst.getString(1);
@@ -47,7 +47,7 @@ public class CustomerModel {
         return "C001";
     }
     public ArrayList<String> getAllCustomerIds() throws SQLException{
-        ResultSet rst = CrudUtil.execute("select customer_id from Customer");
+        ResultSet rst = SQLUtil.execute("select customer_id from Customer");
         ArrayList<String> customerIds = new ArrayList<>();
 
         while (rst.next()) {
@@ -56,7 +56,7 @@ public class CustomerModel {
         return customerIds;
     }
     public CustomerDto findById(String selectedCustId) throws SQLException {
-        ResultSet rst = CrudUtil.execute("select * from Customer where customer_id=?", selectedCustId);
+        ResultSet rst = SQLUtil.execute("select * from Customer where customer_id=?", selectedCustId);
 
         if (rst.next()) {
             return new CustomerDto(
@@ -70,11 +70,11 @@ public class CustomerModel {
     }
 
     public boolean deleteCustomer(String customerId) throws SQLException {
-        return CrudUtil.execute("delete from Customer where customer_id = ?",customerId);
+        return SQLUtil.execute("delete from Customer where customer_id = ?",customerId);
     }
 
     public boolean updateCustomer(CustomerDto customerDto) throws SQLException {
-        return  CrudUtil.execute("update Customer set name=?, nic =?, email=?, phone=? where customer_id =?",
+        return  SQLUtil.execute("update Customer set name=?, nic =?, email=?, phone=? where customer_id =?",
                 customerDto.getCustomerName(),
                 customerDto.getNic(),
                 customerDto.getEmail(),

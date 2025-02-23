@@ -1,16 +1,16 @@
-package lk.ijse.gdse71.supermarketfx.model;
+package lk.ijse.gdse71.supermarketfx.dao.custom.impl;
 
 import lk.ijse.gdse71.supermarketfx.dto.ItemDto;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDetailsDto;
-import lk.ijse.gdse71.supermarketfx.util.CrudUtil;
+import lk.ijse.gdse71.supermarketfx.dao.SQLUtil;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ItemModel {
+public class ItemDAOImpl {
     public ArrayList<String> getAllItemIds() throws SQLException {
-        ResultSet rst = CrudUtil.execute("select item_id from Item");
+        ResultSet rst = SQLUtil.execute("select item_id from Item");
 
         ArrayList<String> itemIds = new ArrayList<>();
 
@@ -21,7 +21,7 @@ public class ItemModel {
     }
 
     public ItemDto findById(String selecteItemId) throws SQLException {
-        ResultSet rst = CrudUtil.execute("select * from Item where item_id = ?",selecteItemId);
+        ResultSet rst = SQLUtil.execute("select * from Item where item_id = ?",selecteItemId);
 
         if (rst.next()){
             return new ItemDto(
@@ -35,7 +35,7 @@ public class ItemModel {
     }
 
     public boolean reduceQty(OrderDetailsDto orderDetailsDto) throws SQLException {
-        return CrudUtil.execute(
+        return SQLUtil.execute(
                 "update Item set quantity = quantity - ? where item_id = ?",
                 orderDetailsDto.getQtyOnHand(),
                 orderDetailsDto.getItemId()
@@ -43,7 +43,7 @@ public class ItemModel {
     }
 
     public ArrayList<ItemDto> getAllItems() throws SQLException {
-        ResultSet rst = CrudUtil.execute("select * from Item");
+        ResultSet rst = SQLUtil.execute("select * from Item");
 
         ArrayList<ItemDto> itemDtos = new ArrayList<>();
         while (rst.next()){
@@ -60,7 +60,7 @@ public class ItemModel {
 
 
     public String getNextItemId() throws SQLException {
-        ResultSet rst = CrudUtil.execute("select item_id from Item order by item_id desc limit 1");
+        ResultSet rst = SQLUtil.execute("select item_id from Item order by item_id desc limit 1");
         if (rst.next()){
             String lastId = rst.getString(1);
             String subString = lastId.substring(1);
@@ -72,7 +72,7 @@ public class ItemModel {
     }
 
     public boolean saveItem(ItemDto itemDto) throws SQLException {
-        return CrudUtil.execute("insert into Item values (?,?,?,?)",
+        return SQLUtil.execute("insert into Item values (?,?,?,?)",
                 itemDto.getItemId(),
                 itemDto.getItemName(),
                 itemDto.getQuantity(),
@@ -82,11 +82,11 @@ public class ItemModel {
     }
 
     public boolean deleteItem(String itemId) throws SQLException {
-        return CrudUtil.execute("delete from Item where item_id = ?",itemId);
+        return SQLUtil.execute("delete from Item where item_id = ?",itemId);
     }
 
     public boolean updateItem(ItemDto itemDto) throws SQLException {
-        return  CrudUtil.execute("update Item set name =?, quantity = ?, price = ? where item_id = ?",
+        return  SQLUtil.execute("update Item set name =?, quantity = ?, price = ? where item_id = ?",
                     itemDto.getItemName(),
                     itemDto.getQuantity(),
                     itemDto.getUnitPrice(),

@@ -1,14 +1,14 @@
-package lk.ijse.gdse71.supermarketfx.model;
+package lk.ijse.gdse71.supermarketfx.dao.custom.impl;
 
 import lk.ijse.gdse71.supermarketfx.dto.OrderDetailsDto;
-import lk.ijse.gdse71.supermarketfx.util.CrudUtil;
+import lk.ijse.gdse71.supermarketfx.dao.SQLUtil;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class OrderDetailsModel {
+public class OrderDetailsDAOImpl {
 
-     private final ItemModel itemModel = new ItemModel();
+     private final ItemDAOImpl itemDAOImpl = new ItemDAOImpl();
 
      public boolean saveOrderDetailsList(ArrayList<OrderDetailsDto> orderDetailsDtos) throws SQLException {
          for (OrderDetailsDto orderDetailsDto : orderDetailsDtos) {
@@ -17,7 +17,7 @@ public class OrderDetailsModel {
              if (!isOrderDetailsSaved) {
                  return false;
              }
-             boolean isItemUpdated =itemModel.reduceQty(orderDetailsDto);
+             boolean isItemUpdated = itemDAOImpl.reduceQty(orderDetailsDto);
              if (!isItemUpdated) {
                  return false;
              }
@@ -26,7 +26,7 @@ public class OrderDetailsModel {
      }
 
     private boolean saveOrderDetail(OrderDetailsDto orderDetailsDto) throws SQLException {
-         return CrudUtil.execute(
+         return SQLUtil.execute(
                  "insert into OrderDetails values (?,?,?,?)",
                  orderDetailsDto.getOrderId(),
                  orderDetailsDto.getItemId(),

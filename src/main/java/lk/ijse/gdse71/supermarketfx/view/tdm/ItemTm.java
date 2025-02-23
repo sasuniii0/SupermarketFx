@@ -1,4 +1,4 @@
-package lk.ijse.gdse71.supermarketfx.dto.tm;
+package lk.ijse.gdse71.supermarketfx.view.tdm;
 
 import lombok.*;
 

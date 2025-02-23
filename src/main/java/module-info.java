@@ -9,4 +9,5 @@ module lk.ijse.gdse71.supermarketfx {
     opens lk.ijse.gdse71.supermarketfx.dto.tm to javafx.base;
     opens lk.ijse.gdse71.supermarketfx.controller to javafx.fxml;
     exports lk.ijse.gdse71.supermarketfx;
+    opens lk.ijse.gdse71.supermarketfx.view.tdm to javafx.base;
 }

@@ -14,10 +14,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import lk.ijse.gdse71.supermarketfx.db.DBConnection;
 import lk.ijse.gdse71.supermarketfx.dto.CustomerDto;
-import lk.ijse.gdse71.supermarketfx.dto.tm.CustomerTm;
-import lk.ijse.gdse71.supermarketfx.model.CustomerModel;
+import lk.ijse.gdse71.supermarketfx.view.tdm.CustomerTm;
+import lk.ijse.gdse71.supermarketfx.dao.custom.impl.CustomerDAOImpl;
 /*
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
@@ -25,7 +24,6 @@ import net.sf.jasperreports.view.JasperViewer;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -293,7 +291,7 @@ public class CustomerController implements Initializable {
         TxtPhone.setText("");
     }
 
-    CustomerModel customerModel = new CustomerModel();
+    CustomerDAOImpl customerModel = new CustomerDAOImpl();
 
     private void loadTableData() throws SQLException {
         ArrayList<CustomerDto> customerDtos = customerModel.getAllCustomers();

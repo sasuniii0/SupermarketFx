@@ -1,4 +1,4 @@
-package lk.ijse.gdse71.supermarketfx.dto.tm;
+package lk.ijse.gdse71.supermarketfx.view.tdm;
 
 import javafx.scene.control.Button;
 import lombok.*;
@@ -14,6 +14,6 @@ public class CartTm {
     private int cartQuantity;
     private double unitPrice;
     private double total;
-    private Button removeButton;;
+    private Button removeButton;
 
 }

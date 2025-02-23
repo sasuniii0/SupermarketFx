@@ -1,18 +1,18 @@
-package lk.ijse.gdse71.supermarketfx.model;
+package lk.ijse.gdse71.supermarketfx.dao.custom.impl;
 
 import lk.ijse.gdse71.supermarketfx.db.DBConnection;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDto;
-import lk.ijse.gdse71.supermarketfx.util.CrudUtil;
+import lk.ijse.gdse71.supermarketfx.dao.SQLUtil;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class OrderModel {
+public class OrderDAOImpl {
 
-    private final OrderDetailsModel orderDetailsModel = new OrderDetailsModel();
+    private final OrderDetailsDAOImpl orderDetailsDAOImpl = new OrderDetailsDAOImpl();
     public String getNextOrderId() throws SQLException {
-        ResultSet rst = CrudUtil.execute("select order_id from Orders order by order_id desc limit 1");
+        ResultSet rst = SQLUtil.execute("select order_id from Orders order by order_id desc limit 1");
 
         if (rst.next()) {
             String lastId = rst.getString(1);
@@ -28,13 +28,13 @@ public class OrderModel {
         Connection connection = DBConnection.getInstance().getConnection();
         try{
             connection.setAutoCommit(false);
-            boolean isOrderSaved = CrudUtil.execute("insert into Orders values (?,?,?)",
+            boolean isOrderSaved = SQLUtil.execute("insert into Orders values (?,?,?)",
                     orderDto.getOrderId(),
                     orderDto.getCustomerId(),
                     orderDto.getOrderDate()
             );
             if(isOrderSaved){
-                boolean isOrderDetailsSaved = orderDetailsModel.saveOrderDetailsList(orderDto.getOrderDetailsDtos());
+                boolean isOrderDetailsSaved = orderDetailsDAOImpl.saveOrderDetailsList(orderDto.getOrderDetailsDtos());
                 if(isOrderDetailsSaved){
                     connection.commit();
                     return true;
@@ -45,6 +45,7 @@ public class OrderModel {
             return false;
         } catch (Exception e) {
             connection.rollback();
+            e.printStackTrace();
             return false;
         }finally {
             connection.setAutoCommit(true);

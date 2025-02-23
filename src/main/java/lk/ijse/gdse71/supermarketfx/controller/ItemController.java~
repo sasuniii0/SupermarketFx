@@ -9,7 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import lk.ijse.gdse71.supermarketfx.dto.ItemDto;
-import lk.ijse.gdse71.supermarketfx.view.tdm.ItemTm;
+import lk.ijse.gdse71.supermarketfx.dto.tm.ItemTm;
 import lk.ijse.gdse71.supermarketfx.dao.custom.impl.ItemDAOImpl;
 
 import java.net.URL;

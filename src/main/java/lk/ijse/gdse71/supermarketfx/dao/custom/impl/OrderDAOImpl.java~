@@ -1,4 +1,4 @@
-package lk.ijse.gdse71.supermarketfx.model;
+package lk.ijse.gdse71.supermarketfx.dao.custom.impl;
 
 import lk.ijse.gdse71.supermarketfx.db.DBConnection;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDto;
@@ -8,9 +8,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class OrderModel {
+public class OrderDAOImpl {
 
-    private final OrderDetailsModel orderDetailsModel = new OrderDetailsModel();
+    private final OrderDetailsDAOImpl orderDetailsDAOImpl = new OrderDetailsDAOImpl();
     public String getNextOrderId() throws SQLException {
         ResultSet rst = CrudUtil.execute("select order_id from Orders order by order_id desc limit 1");
 
@@ -34,7 +34,7 @@ public class OrderModel {
                     orderDto.getOrderDate()
             );
             if(isOrderSaved){
-                boolean isOrderDetailsSaved = orderDetailsModel.saveOrderDetailsList(orderDto.getOrderDetailsDtos());
+                boolean isOrderDetailsSaved = orderDetailsDAOImpl.saveOrderDetailsList(orderDto.getOrderDetailsDtos());
                 if(isOrderDetailsSaved){
                     connection.commit();
                     return true;
