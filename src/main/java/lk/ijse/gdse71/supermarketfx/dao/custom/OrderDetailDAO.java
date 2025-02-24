@@ -8,5 +8,5 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface OrderDetailDAO extends CrudDAO<OrderDetails> {
-     boolean saveOrderDetail(OrderDetailsDto orderDetailsDto) throws SQLException ;
+     /*boolean save(OrderDetailsDto orderDetailsDto) throws SQLException ;*/
 }

@@ -8,6 +8,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import lk.ijse.gdse71.supermarketfx.bo.BOFactory;
+import lk.ijse.gdse71.supermarketfx.bo.custom.ItemBO;
+import lk.ijse.gdse71.supermarketfx.bo.custom.impl.ItemBOImpl;
+import lk.ijse.gdse71.supermarketfx.dao.DAOFactory;
 import lk.ijse.gdse71.supermarketfx.dto.ItemDto;
 import lk.ijse.gdse71.supermarketfx.view.tdm.ItemTm;
 import lk.ijse.gdse71.supermarketfx.dao.custom.impl.ItemDAOImpl;
@@ -68,6 +72,8 @@ public class ItemController implements Initializable {
     @FXML
     private TextField TxtQuantity;
 
+    ItemBO itemBO = (ItemBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM);
+
     @FXML
     void ClickOnTableAction(MouseEvent event) {
         ItemTm itemTm = TblItem.getSelectionModel().getSelectedItem();
@@ -91,7 +97,7 @@ public class ItemController implements Initializable {
         Optional<ButtonType> optionalButtonType = alert.showAndWait();
 
         if (optionalButtonType.isPresent() && optionalButtonType.get() == ButtonType.YES) {
-            boolean isDeleted = itemDAOImpl.deleteItem(itemId);
+            boolean isDeleted = itemBO.deleteItem(itemId);
             if (isDeleted){
                 refreshPage();
                 new Alert(Alert.AlertType.INFORMATION,"Item Deleted").show();
@@ -115,7 +121,7 @@ public class ItemController implements Initializable {
 
         ItemDto itemDto = new ItemDto(itemId, itemName, quantity, price);
 
-        boolean isSaved = itemDAOImpl.saveItem(itemDto);
+        boolean isSaved = itemBO.saveItem(itemDto);
         if (isSaved){
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Item Saved").show();
@@ -133,7 +139,7 @@ public class ItemController implements Initializable {
 
         ItemDto itemDto = new ItemDto(itemId, itemName, quantity, price);
 
-        boolean isUpdated = itemDAOImpl.updateItem(itemDto);
+        boolean isUpdated = itemBO.updateItem(itemDto);
         if (isUpdated){
             refreshPage();
             new Alert(Alert.AlertType.INFORMATION, "Item Updated").show();
@@ -173,7 +179,7 @@ public class ItemController implements Initializable {
     ItemDAOImpl itemDAOImpl = new ItemDAOImpl();
 
     private void loadTableData() throws SQLException {
-        ArrayList<ItemDto> itemDtos = itemDAOImpl.getAllItems();
+        ArrayList<ItemDto> itemDtos = itemBO.getAllItems();
 
         ObservableList<ItemTm>itemTms = FXCollections.observableArrayList();
 
@@ -190,7 +196,7 @@ public class ItemController implements Initializable {
     }
 
     private void loadNextItemId() throws SQLException {
-        String nextItemIdId = itemDAOImpl.getNextItemId();
+        String nextItemIdId = itemBO.getNextItemId();
         LblItemId.setText(nextItemIdId);
     }
 }

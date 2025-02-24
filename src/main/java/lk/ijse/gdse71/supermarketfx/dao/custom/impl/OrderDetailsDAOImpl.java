@@ -3,6 +3,7 @@ package lk.ijse.gdse71.supermarketfx.dao.custom.impl;
 import lk.ijse.gdse71.supermarketfx.dao.custom.OrderDetailDAO;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDetailsDto;
 import lk.ijse.gdse71.supermarketfx.dao.SQLUtil;
+import lk.ijse.gdse71.supermarketfx.entity.OrderDetails;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class OrderDetailsDAOImpl implements OrderDetailDAO {
 
      private final ItemDAOImpl itemDAOImpl = new ItemDAOImpl();
 
-     public boolean saveOrderDetailsList(ArrayList<OrderDetailsDto> orderDetailsDtos) throws SQLException {
+     /*public boolean saveOrderDetailsList(ArrayList<OrderDetailsDto> orderDetailsDtos) throws SQLException {
          for (OrderDetailsDto orderDetailsDto : orderDetailsDtos) {
              boolean isOrderDetailsSaved = saveOrderDetail(orderDetailsDto);
 
@@ -24,15 +25,35 @@ public class OrderDetailsDAOImpl implements OrderDetailDAO {
              }
          }
          return true;
-     }
+     }*/
 
-    public boolean saveOrderDetail(OrderDetailsDto orderDetailsDto) throws SQLException {
+    @Override
+    public ArrayList<OrderDetails> getAll() throws SQLException {
+        return null;
+    }
+
+    public boolean save(OrderDetails entity) throws SQLException {
          return SQLUtil.execute(
                  "insert into OrderDetails values (?,?,?,?)",
-                 orderDetailsDto.getOrderId(),
-                 orderDetailsDto.getItemId(),
-                 orderDetailsDto.getQtyOnHand(),
-                 orderDetailsDto.getPrice()
+                 entity.getOrderId(),
+                 entity.getItemId(),
+                 entity.getQtyOnHand(),
+                 entity.getPrice()
          );
+    }
+
+    @Override
+    public String getNextId() throws SQLException {
+        return "";
+    }
+
+    @Override
+    public boolean delete(String id) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public boolean update(OrderDetails dto) throws SQLException {
+        return false;
     }
 }

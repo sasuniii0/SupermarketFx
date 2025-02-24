@@ -8,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import lk.ijse.gdse71.supermarketfx.bo.BOFactory;
 import lk.ijse.gdse71.supermarketfx.bo.custom.CustomerBO;
 import lk.ijse.gdse71.supermarketfx.bo.custom.ItemBO;
 import lk.ijse.gdse71.supermarketfx.bo.custom.OrderBO;
@@ -91,9 +90,9 @@ public class OrderController implements Initializable {
     @FXML
     private TableView<CartTm> TblOrder;
 
-    CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
-    ItemBO itemBO = (ItemBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM);
-    OrderBO orderBO = (OrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER);
+    CustomerBO customerBO = (CustomerBO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.CUSTOMER);
+    ItemBO itemBO = (ItemBO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ITEM);
+    OrderBO orderBO = (OrderBO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ORDER);
 
     private final ObservableList<CartTm> cartTms = FXCollections.observableArrayList();
 

@@ -3,13 +3,11 @@ package lk.ijse.gdse71.supermarketfx.bo.custom.impl;
 import lk.ijse.gdse71.supermarketfx.bo.custom.OrderBO;
 import lk.ijse.gdse71.supermarketfx.dao.DAOFactory;
 import lk.ijse.gdse71.supermarketfx.dao.SQLUtil;
-import lk.ijse.gdse71.supermarketfx.dao.custom.ItemDAO;
 import lk.ijse.gdse71.supermarketfx.dao.custom.OrderDAO;
 import lk.ijse.gdse71.supermarketfx.dao.custom.OrderDetailDAO;
 import lk.ijse.gdse71.supermarketfx.db.DBConnection;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDetailsDto;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDto;
-import lk.ijse.gdse71.supermarketfx.entity.OrderDetails;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,11 +17,10 @@ public class OrderBOImpl implements OrderBO {
 
     OrderDAO orderDAO = (OrderDAO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ORDER);
     OrderDetailDAO orderDetailDAO = (OrderDetailDAO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ORDER_DETAIL);
-    ItemDAO itemDAO = (ItemDAO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ITEM);
 
     @Override
     public String getNextOrderId() throws SQLException {
-        return orderDAO.getNextId();
+        return o;
     }
 
     public boolean saveOrder(OrderDto orderDto) throws SQLException {
@@ -61,7 +58,7 @@ public class OrderBOImpl implements OrderBO {
             if (!isOrderDetailsSaved) {
                 return false;
             }
-            boolean isItemUpdated = itemDAO.reduceQty(orderDetailsDto);
+            boolean isItemUpdated = itemDAOImpl.reduceQty(orderDetailsDto);
             if (!isItemUpdated) {
                 return false;
             }
@@ -71,6 +68,6 @@ public class OrderBOImpl implements OrderBO {
 
     @Override
     public boolean saveOrderDetail(OrderDetailsDto orderDetailsDto) throws SQLException {
-        return orderDetailDAO.save(new OrderDetails());
+        return false;
     }
 }

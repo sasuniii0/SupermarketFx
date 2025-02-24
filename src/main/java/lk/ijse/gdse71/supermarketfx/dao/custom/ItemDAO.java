@@ -14,9 +14,9 @@ public interface ItemDAO extends CrudDAO<Item> {
      ArrayList<String> getAllItemIds() throws SQLException;
      ItemDto findById(String selecteItemId) throws SQLException;
      boolean reduceQty(OrderDetailsDto orderDetailsDto) throws SQLException ;
-     ArrayList<ItemDto> getAllItems() throws SQLException ;
-     String getNextItemId() throws SQLException ;
-     boolean saveItem(ItemDto itemDto) throws SQLException ;
-     boolean deleteItem(String itemId) throws SQLException;
-     boolean updateItem(ItemDto itemDto) throws SQLException ;
+     /*ArrayList<ItemDto> getAll() throws SQLException ;
+     String getNextId() throws SQLException ;
+     boolean save(ItemDto itemDto) throws SQLException ;
+     boolean delete(String itemId) throws SQLException;
+     boolean update(ItemDto itemDto) throws SQLException ;*/
 }
