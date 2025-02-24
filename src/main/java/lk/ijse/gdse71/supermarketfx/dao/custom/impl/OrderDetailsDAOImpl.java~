@@ -26,7 +26,7 @@ public class OrderDetailsDAOImpl implements OrderDetailDAO {
          return true;
      }
 
-    public boolean saveOrderDetail(OrderDetailsDto orderDetailsDto) throws SQLException {
+    private boolean saveOrderDetail(OrderDetailsDto orderDetailsDto) throws SQLException {
          return SQLUtil.execute(
                  "insert into OrderDetails values (?,?,?,?)",
                  orderDetailsDto.getOrderId(),
