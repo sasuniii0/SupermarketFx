@@ -22,8 +22,21 @@ public class OrderDAOImpl implements OrderDAO {
     public boolean save(Order dto) throws SQLException {
         return false;
     }
-
     public String getNextId() throws SQLException {
+        ResultSet rst = SQLUtil.execute("SELECT MAX(order_id) FROM Orders");
+
+        if (rst.next()) {
+            String lastId = rst.getString(1);
+            if (lastId != null && lastId.startsWith("O")) {
+                int newIndex = Integer.parseInt(lastId.substring(1)) + 1;
+                return String.format("O%03d", newIndex);
+            }
+        }
+        return "O001";  // First order
+    }
+
+
+    /*public String getNextId() throws SQLException {
         ResultSet rst = SQLUtil.execute("select order_id from Orders order by order_id desc limit 1");
 
         if (rst.next()) {
@@ -34,7 +47,7 @@ public class OrderDAOImpl implements OrderDAO {
             return String.format("0%03d", newIndex);
         }
         return "O001";
-    }
+    }*/
 
     @Override
     public boolean delete(String id) throws SQLException {

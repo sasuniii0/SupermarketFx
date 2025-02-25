@@ -16,7 +16,7 @@ public class OrderDetailsDAOImpl implements OrderDetailDAO {
 
     public boolean save(OrderDetails entity) throws SQLException {
          return SQLUtil.execute(
-                 "INSERT INTO OrderDetails (order_id, item_id, quantity, price) VALUES (?, ?, ?, ?)",
+                 "insert into OrderDetails values (?,?,?,?)",
                  entity.getOrderId(),
                  entity.getItemId(),
                  entity.getQtyOnHand(),

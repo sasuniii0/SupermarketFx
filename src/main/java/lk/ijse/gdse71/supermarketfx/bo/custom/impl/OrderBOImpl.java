@@ -12,6 +12,7 @@ import lk.ijse.gdse71.supermarketfx.dto.OrderDto;
 import lk.ijse.gdse71.supermarketfx.entity.OrderDetails;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -30,6 +31,12 @@ public class OrderBOImpl implements OrderBO {
         Connection connection = DBConnection.getInstance().getConnection();
         try{
             connection.setAutoCommit(false);
+
+            ResultSet rs = SQLUtil.execute("SELECT order_id FROM Orders WHERE order_id = ?", orderDto.getOrderId());
+            if (rs.next()) {
+                throw new SQLException("Duplicate Order ID: " + orderDto.getOrderId());
+            }
+
             boolean isOrderSaved = SQLUtil.execute("insert into Orders values (?,?,?)",
                     orderDto.getOrderId(),
                     orderDto.getCustomerId(),
@@ -71,6 +78,11 @@ public class OrderBOImpl implements OrderBO {
 
     @Override
     public boolean saveOrderDetail(OrderDetailsDto orderDetailsDto) throws SQLException {
-        return orderDetailDAO.save(new OrderDetails());
+        return orderDetailDAO.save(new OrderDetails(
+                orderDetailsDto.getOrderId(),
+                orderDetailsDto.getItemId(),
+                orderDetailsDto.getQtyOnHand(),
+                orderDetailsDto.getPrice()
+        ));
     }
 }
