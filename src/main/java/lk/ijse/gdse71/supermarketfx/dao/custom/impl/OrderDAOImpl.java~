@@ -45,4 +45,32 @@ public class OrderDAOImpl implements OrderDAO {
     public boolean update(Order dto) throws SQLException {
         return false;
     }
+
+    /*public boolean saveOrder(OrderDto orderDto) throws SQLException {
+        Connection connection = DBConnection.getInstance().getConnection();
+        try{
+            connection.setAutoCommit(false);
+            boolean isOrderSaved = SQLUtil.execute("insert into Orders values (?,?,?)",
+                    orderDto.getOrderId(),
+                    orderDto.getCustomerId(),
+                    orderDto.getOrderDate()
+            );
+            if(isOrderSaved){
+                boolean isOrderDetailsSaved = orderDetailsDAOImpl.saveOrderDetailsList(orderDto.getOrderDetailsDtos());
+                if(isOrderDetailsSaved){
+                    connection.commit();
+                    return true;
+                }
+
+            }
+            connection.rollback();
+            return false;
+        } catch (Exception e) {
+            connection.rollback();
+            e.printStackTrace();
+            return false;
+        }finally {
+            connection.setAutoCommit(true);
+        }
+    }*/
 }

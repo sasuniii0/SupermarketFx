@@ -5,4 +5,7 @@ import lk.ijse.gdse71.supermarketfx.entity.Order;
 
 
 public interface OrderDAO extends CrudDAO<Order> {
+/*
+     String getNextId() throws SQLException;
+*/
 }
