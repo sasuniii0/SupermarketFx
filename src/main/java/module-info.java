@@ -9,6 +9,8 @@ module lk.ijse.gdse71.supermarketfx {
     requires jakarta.persistence;
     requires java.naming;
 
+    opens lk.ijse.gdse71.supermarketfx.config to jakarta.persistence;
+    opens lk.ijse.gdse71.supermarketfx.entity to org.hibernate.orm.core;
     opens lk.ijse.gdse71.supermarketfx.view.tdm to javafx.base;
     opens lk.ijse.gdse71.supermarketfx.controller to javafx.fxml;
     exports lk.ijse.gdse71.supermarketfx;

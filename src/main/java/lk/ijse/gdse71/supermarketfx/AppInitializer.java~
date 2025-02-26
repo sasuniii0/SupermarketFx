@@ -51,8 +51,6 @@ public class AppInitializer extends Application {
     public static void main(String[] args) {
         Session session = FactoryConfiguration.getInstance().getSession();
         session.close();
-
-        // hadala iwra krla run krl blnna one...
 /*
         launch(args);
 */
