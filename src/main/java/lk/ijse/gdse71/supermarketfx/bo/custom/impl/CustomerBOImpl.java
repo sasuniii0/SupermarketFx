@@ -8,6 +8,8 @@ import lk.ijse.gdse71.supermarketfx.entity.Customer;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class CustomerBOImpl implements CustomerBO {
 
@@ -15,7 +17,7 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public ArrayList<CustomerDto> getAllCustomers() throws SQLException {
-        ArrayList<Customer> customerDtos = customerDAO.getAll();
+        ArrayList<Customer> customerDtos = (ArrayList<Customer>) customerDAO.getAll();
         ArrayList<CustomerDto> customerDtos1 = new ArrayList<>();
 
         for (Customer customer : customerDtos) {
@@ -42,12 +44,12 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     @Override
-    public ArrayList<String> getAllCustomerIds() throws SQLException {
+    public List<Customer> getAllCustomerIds() throws SQLException {
         return customerDAO.getAllCustomerIds();
     }
 
     @Override
-    public CustomerDto findById(String selectedCustId) throws SQLException {
+    public Optional<Customer> findById(String selectedCustId) throws SQLException {
         return customerDAO.findById(selectedCustId);
     }
 

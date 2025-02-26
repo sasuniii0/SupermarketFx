@@ -8,7 +8,12 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lk.ijse.gdse71.supermarketfx.config.FactoryConfiguration;
+import lk.ijse.gdse71.supermarketfx.dao.custom.impl.CustomerDAOImpl;
+import lk.ijse.gdse71.supermarketfx.entity.Customer;
 import org.hibernate.Session;
+
+import java.sql.SQLException;
+import java.util.Optional;
 
 public class AppInitializer extends Application {
     @Override
@@ -48,13 +53,22 @@ public class AppInitializer extends Application {
         stage.show();*/
     }
 
-    public static void main(String[] args) {
-        Session session = FactoryConfiguration.getInstance().getSession();
-        session.close();
-
+    public static void main(String[] args) throws SQLException {
+//        Session session = FactoryConfiguration.getInstance().getSession();
+//        session.close();
         // hadala iwra krla run krl blnna one...
-/*
+
+        CustomerDAOImpl customerDAO= new CustomerDAOImpl();
+        Optional<Customer> customer = customerDAO.findById("C001");
+
+        if (!customer.isEmpty()) {
+            Customer customer1 = customer.get();
+        }
+        // have data
+
+        /*if (customer.isPresent()) {
+            Customer customer1 = customer.get();
+        }*/
         launch(args);
-*/
     }
 }

@@ -17,6 +17,7 @@ import lk.ijse.gdse71.supermarketfx.dto.CustomerDto;
 import lk.ijse.gdse71.supermarketfx.dto.ItemDto;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDetailsDto;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDto;
+import lk.ijse.gdse71.supermarketfx.entity.Customer;
 import lk.ijse.gdse71.supermarketfx.view.tdm.CartTm;
 import lk.ijse.gdse71.supermarketfx.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.gdse71.supermarketfx.dao.custom.impl.ItemDAOImpl;
@@ -27,6 +28,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class OrderController implements Initializable {
@@ -214,10 +217,10 @@ public class OrderController implements Initializable {
     @FXML
     void CmbCustomerOnClickAction(ActionEvent event) throws SQLException {
         String selectedCustId = CmbCustId.getSelectionModel().getSelectedItem();
-        CustomerDto customerDto = customerBO.findById(selectedCustId);
+        Optional<Customer> customerDto = customerBO.findById(selectedCustId);
 
         if (customerDto != null) {
-            LblCustName.setText(customerDto.getCustomerName());
+            LblCustName.setText(customerDto.get().getCustomerName());
         }
     }
 
@@ -271,9 +274,9 @@ public class OrderController implements Initializable {
     }
 
     private void loadCustomerIds() throws SQLException {
-        ArrayList<String> customerIds = customerBO.getAllCustomerIds();
+        List<Customer> customerIds = customerBO.getAllCustomerIds();
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        observableList.addAll(customerIds);
+        observableList.addAll(String.valueOf(customerIds));
         CmbCustId.setItems(observableList);
     }
 

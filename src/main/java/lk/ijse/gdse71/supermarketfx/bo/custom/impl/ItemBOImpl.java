@@ -29,7 +29,7 @@ public class ItemBOImpl implements ItemBO {
 
     @Override
     public ArrayList<ItemDto> getAllItems() throws SQLException {
-        ArrayList<Item> items = itemDAO.getAll();
+        ArrayList<Item> items = (ArrayList<Item>) itemDAO.getAll();
         ArrayList<ItemDto> itemDtos = new ArrayList<>();
         for (Item item : items) {
             itemDtos.add(new ItemDto(
