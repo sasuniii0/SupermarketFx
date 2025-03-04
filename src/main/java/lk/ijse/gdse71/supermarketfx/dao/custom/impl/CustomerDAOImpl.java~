@@ -41,6 +41,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         Session session = factoryConfiguration.getSession();
         Transaction transaction = session.beginTransaction();
         try {
+
             session.persist(entity);
             transaction.commit();
             return true;

@@ -297,6 +297,8 @@ public class CustomerController implements Initializable {
         TxtPhone.setText("");
     }
 
+    CustomerDAOImpl customerModel = new CustomerDAOImpl();
+
     private void loadTableData() throws SQLException {
         ArrayList<CustomerDto> customerDtos = customerBO.getAllCustomers();
 

@@ -25,9 +25,14 @@ public class OrderDetailsDAOImpl implements OrderDetailDAO {
     }
 
     @Override
-    public String getNextId() throws SQLException {
+    public String getLastId() throws SQLException {
         return "";
     }
+
+    /*@Override
+    public String getNextId() throws SQLException {
+        return "";
+    }*/
 
     @Override
     public boolean delete(String id) throws SQLException {

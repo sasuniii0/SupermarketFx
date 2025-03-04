@@ -22,29 +22,25 @@ public class OrderDAOImpl implements OrderDAO {
     public boolean save(Order dto) throws SQLException {
         return false;
     }
-    public String getNextId() throws SQLException {
+
+    /*public String getNextId() throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT MAX(order_id) FROM Orders");
 
         if (rst.next()) {
             String lastId = rst.getString(1);
-
-            // Check if lastId is not null and has at least two characters to safely extract substring
-            if (lastId != null && lastId.length() >= 2) {
-                String subString = lastId.substring(1); // Extract numeric part
-                try {
-                    int i = Integer.parseInt(subString); // Convert to integer
-                    int newIndex = i + 1; // Increment by 1
-                    return String.format("O%03d", newIndex); // Format as O001, O002, etc.
-                } catch (NumberFormatException e) {
-                    System.err.println("Error parsing order_id: " + lastId);
-                    return "O001"; // Return default if there's an issue
-                }
+            if (lastId != null && lastId.startsWith("O")) {
+                int newIndex = Integer.parseInt(lastId.substring(1)) + 1;
+                return String.format("O%03d", newIndex);
             }
         }
-        return "O001"; // Default for first order
+        return "O001";  // First order
+    }*/
+
+    public String getLastId() throws SQLException {
+        ResultSet rst = SQLUtil.execute("SELECT MAX(order_id) FROM Orders");
+        return rst.next() ? rst.getString(1) : null;
     }
-
-
+    
     /*public String getNextId() throws SQLException {
         ResultSet rst = SQLUtil.execute("select order_id from Orders order by order_id desc limit 1");
 

@@ -17,4 +17,5 @@ public interface CustomerBO extends SuperBO {
      Optional<Customer> findById(String selectedCustId) throws SQLException ;
      boolean deleteCustomer(String customerId) throws SQLException ;
      boolean updateCustomer(CustomerDto customerDto) throws SQLException ;
-}
+     String generateNextCustomerId() throws SQLException ;
+     }

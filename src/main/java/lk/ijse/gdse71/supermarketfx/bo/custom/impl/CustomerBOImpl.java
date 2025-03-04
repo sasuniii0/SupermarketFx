@@ -35,12 +35,13 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public boolean saveCustomer(CustomerDto customerDto) throws SQLException {
+
         return customerDAO.save(new Customer(customerDto.getCustomerId(), customerDto.getCustomerName(), customerDto.getNic(), customerDto.getEmail(), customerDto.getPhone()));
     }
 
     @Override
     public String getNextCustomerId() throws SQLException {
-        return customerDAO.getNextId();
+        return generateNextCustomerId();
     }
 
     @Override
@@ -62,4 +63,16 @@ public class CustomerBOImpl implements CustomerBO {
     public boolean updateCustomer(CustomerDto customerDto) throws SQLException {
         return customerDAO.update(new Customer(customerDto.getCustomerId(), customerDto.getCustomerName(), customerDto.getNic(), customerDto.getEmail(), customerDto.getPhone()));
     }
+    public String generateNextCustomerId() throws SQLException {
+        String lastId = customerDAO.getLastId(); // Fetch the last ID from DB
+        if (lastId != null) {
+            String subString = lastId.substring(1);
+            int i = Integer.parseInt(subString);
+            int newIndex = i + 1;
+            return String.format("C%03d", newIndex); // Format as C001, C002...
+        }
+        return "C001"; // Default if no customers exist
+    }
+
+
 }

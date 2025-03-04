@@ -8,6 +8,8 @@ import lk.ijse.gdse71.supermarketfx.entity.Customer;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class CustomerBOImpl implements CustomerBO {
 
@@ -38,16 +40,16 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public String getNextCustomerId() throws SQLException {
-        return customerDAO.getNextId();
+        return generateNextCustomerId();
     }
 
     @Override
-    public ArrayList<String> getAllCustomerIds() throws SQLException {
+    public List<Customer> getAllCustomerIds() throws SQLException {
         return customerDAO.getAllCustomerIds();
     }
 
     @Override
-    public CustomerDto findById(String selectedCustId) throws SQLException {
+    public Optional<Customer> findById(String selectedCustId) throws SQLException {
         return customerDAO.findById(selectedCustId);
     }
 
@@ -60,4 +62,16 @@ public class CustomerBOImpl implements CustomerBO {
     public boolean updateCustomer(CustomerDto customerDto) throws SQLException {
         return customerDAO.update(new Customer(customerDto.getCustomerId(), customerDto.getCustomerName(), customerDto.getNic(), customerDto.getEmail(), customerDto.getPhone()));
     }
+    public String generateNextCustomerId() throws SQLException {
+        String lastId = customerDAO.getLastId(); // Fetch the last ID from DB
+        if (lastId != null) {
+            String subString = lastId.substring(1);
+            int i = Integer.parseInt(subString);
+            int newIndex = i + 1;
+            return String.format("C%03d", newIndex); // Format as C001, C002...
+        }
+        return "C001"; // Default if no customers exist
+    }
+
+
 }

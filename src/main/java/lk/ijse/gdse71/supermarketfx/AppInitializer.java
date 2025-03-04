@@ -27,7 +27,7 @@ public class AppInitializer extends Application {
             @Override
             protected Scene call() throws Exception {
                 FXMLLoader fxmlLoader = new FXMLLoader(AppInitializer.class.getResource("/view/MainLayout.fxml"));
-                return new Scene(fxmlLoader.load());
+                return new Scene(fxmlLoader. load());
             }
         };
 

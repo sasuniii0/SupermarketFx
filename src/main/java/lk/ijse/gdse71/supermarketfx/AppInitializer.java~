@@ -61,7 +61,7 @@ public class AppInitializer extends Application {
         CustomerDAOImpl customerDAO= new CustomerDAOImpl();
         Optional<Customer> customer = customerDAO.findById("C001");
 
-        if (customer.isEmpty()) {
+        if (!customer.isEmpty()) {
             Customer customer1 = customer.get();
         }
         // have data

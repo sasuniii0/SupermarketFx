@@ -24,8 +24,19 @@ public class OrderBOImpl implements OrderBO {
 
     @Override
     public String getNextOrderId() throws SQLException {
-        return orderDAO.getNextId();
+        return generateNextOrderId();
     }
+    public String generateNextOrderId() throws SQLException {
+        String lastId = orderDAO.getLastId(); // Call DAO method
+        if (lastId != null) {
+            String subString = lastId.substring(1);
+            int i = Integer.parseInt(subString);
+            int newIndex = i + 1;
+            return String.format("O%03d", newIndex);
+        }
+        return "O001";
+    }
+
 
     public boolean saveOrder(OrderDto orderDto) throws SQLException {
         Connection connection = DBConnection.getInstance().getConnection();

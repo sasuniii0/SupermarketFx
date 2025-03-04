@@ -44,7 +44,7 @@ public class ItemBOImpl implements ItemBO {
 
     @Override
     public String getNextItemId() throws SQLException {
-        return generateNextItemId();
+        return itemDAO.getNextId();
     }
 
     @Override
@@ -71,15 +71,5 @@ public class ItemBOImpl implements ItemBO {
                 itemDto.getUnitPrice()
         ));
     }
-    public String generateNextItemId() throws SQLException {
-        String lastId = itemDAO.getLastId(); // Call DAO method
-        if (lastId != null) {
-            String subString = lastId.substring(1);
-            int i = Integer.parseInt(subString);
-            int newIndex = i + 1;
-            return String.format("I%03d", newIndex);
-        }
-        return "I001";
-    }
-
+    
 }

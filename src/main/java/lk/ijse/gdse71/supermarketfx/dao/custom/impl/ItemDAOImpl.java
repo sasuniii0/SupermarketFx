@@ -61,7 +61,12 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
 
-    public String getNextId() throws SQLException {
+    public String getLastId() throws SQLException {
+        ResultSet rst = SQLUtil.execute("SELECT item_id FROM Item ORDER BY item_id DESC LIMIT 1");
+        return rst.next() ? rst.getString(1) : null;
+    }
+
+    /*public String getNextId() throws SQLException {
         ResultSet rst = SQLUtil.execute("select item_id from Item order by item_id desc limit 1");
         if (rst.next()){
             String lastId = rst.getString(1);
@@ -71,7 +76,7 @@ public class ItemDAOImpl implements ItemDAO {
             return String.format("I%03d", newIndex);
         }
         return "I001";
-    }
+    }*/
 
     public boolean save(Item entity) throws SQLException {
         return SQLUtil.execute("insert into Item values (?,?,?,?)",
