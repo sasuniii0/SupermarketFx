@@ -18,6 +18,7 @@ import lk.ijse.gdse71.supermarketfx.dto.ItemDto;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDetailsDto;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDto;
 import lk.ijse.gdse71.supermarketfx.entity.Customer;
+import lk.ijse.gdse71.supermarketfx.entity.Item;
 import lk.ijse.gdse71.supermarketfx.view.tdm.CartTm;
 import lk.ijse.gdse71.supermarketfx.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.gdse71.supermarketfx.dao.custom.impl.ItemDAOImpl;
@@ -267,9 +268,9 @@ public class OrderController implements Initializable {
     }
 
     private void loadItemId() throws SQLException {
-        ArrayList<String> itemIds = itemBO.getAllItemIds();
+        List<Item> itemIds = itemBO.getAllItemIds();
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        observableList.addAll(itemIds);
+        observableList.addAll(String.valueOf(itemIds));
         CmbItemId.setItems(observableList);
     }
 
