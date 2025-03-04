@@ -1,9 +1,8 @@
 package lk.ijse.gdse71.supermarketfx.dao;
 
-import lk.ijse.gdse71.supermarketfx.dto.CustomerDto;
+import lk.ijse.gdse71.supermarketfx.entity.Customer;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

@@ -18,4 +18,6 @@ public interface ItemBO extends SuperBO {
      boolean saveItem(ItemDto itemDto) throws SQLException ;
      boolean deleteItem(String itemId) throws SQLException ;
      boolean updateItem(ItemDto itemDto) throws SQLException;
+     String generateNextItemId() throws SQLException ;
+
 }

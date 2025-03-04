@@ -9,16 +9,18 @@ import lk.ijse.gdse71.supermarketfx.entity.Item;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class ItemBOImpl implements ItemBO {
     ItemDAO itemDAO = (ItemDAO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ITEM);
     @Override
-    public ArrayList<String> getAllItemIds() throws SQLException {
+    public List<Item> getAllItemIds() throws SQLException {
         return itemDAO.getAllItemIds();
     }
 
     @Override
-    public ItemDto findById(String selecteItemId) throws SQLException {
+    public Optional<Item> findById(String selecteItemId) throws SQLException {
         return itemDAO.findById(selecteItemId);
     }
 
@@ -44,7 +46,7 @@ public class ItemBOImpl implements ItemBO {
 
     @Override
     public String getNextItemId() throws SQLException {
-        return itemDAO.getNextId();
+        return generateNextItemId();
     }
 
     @Override
@@ -71,5 +73,15 @@ public class ItemBOImpl implements ItemBO {
                 itemDto.getUnitPrice()
         ));
     }
-    
+    public String generateNextItemId() throws SQLException {
+        String lastId = itemDAO.getLastId(); // Call DAO method
+        if (lastId != null) {
+            String subString = lastId.substring(1);
+            int i = Integer.parseInt(subString);
+            int newIndex = i + 1;
+            return String.format("I%03d", newIndex);
+        }
+        return "I001";
+    }
+
 }

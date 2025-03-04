@@ -35,8 +35,10 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public boolean saveCustomer(CustomerDto customerDto) throws SQLException {
-
+/*
         return customerDAO.save(new Customer(customerDto.getCustomerId(), customerDto.getCustomerName(), customerDto.getNic(), customerDto.getEmail(), customerDto.getPhone()));
+*/
+    return false;
     }
 
     @Override
@@ -61,7 +63,10 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public boolean updateCustomer(CustomerDto customerDto) throws SQLException {
+/*
         return customerDAO.update(new Customer(customerDto.getCustomerId(), customerDto.getCustomerName(), customerDto.getNic(), customerDto.getEmail(), customerDto.getPhone()));
+*/
+    return false;
     }
     public String generateNextCustomerId() throws SQLException {
         String lastId = customerDAO.getLastId(); // Fetch the last ID from DB

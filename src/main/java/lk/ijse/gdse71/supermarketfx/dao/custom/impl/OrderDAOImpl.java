@@ -1,20 +1,17 @@
 package lk.ijse.gdse71.supermarketfx.dao.custom.impl;
 
 import lk.ijse.gdse71.supermarketfx.dao.custom.OrderDAO;
-import lk.ijse.gdse71.supermarketfx.db.DBConnection;
-import lk.ijse.gdse71.supermarketfx.dto.OrderDto;
 import lk.ijse.gdse71.supermarketfx.dao.SQLUtil;
 import lk.ijse.gdse71.supermarketfx.entity.Order;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class OrderDAOImpl implements OrderDAO {
 
     @Override
-    public ArrayList<Order> getAll() throws SQLException {
+    public List<Order> getAll() throws SQLException {
         return null;
     }
 

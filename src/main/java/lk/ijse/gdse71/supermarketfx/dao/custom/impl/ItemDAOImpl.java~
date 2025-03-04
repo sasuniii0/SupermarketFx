@@ -88,18 +88,8 @@ public class ItemDAOImpl implements ItemDAO {
 
 
     public String getLastId() throws SQLException {
-        Session session = factoryConfiguration.getSession();
-        try {
-            Query<String> query = session.createQuery("SELECT i.itemId FROM Item i ORDER BY i.itemId DESC", String.class);
-            query.setMaxResults(1);
-            return query.uniqueResult();
-        } catch (Exception e) {
-            throw new SQLException("Error retrieving last item ID", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
+        ResultSet rst = SQLUtil.execute("SELECT item_id FROM Item ORDER BY item_id DESC LIMIT 1");
+        return rst.next() ? rst.getString(1) : null;
     }
 
     /*public String getNextId() throws SQLException {
@@ -139,52 +129,16 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     public boolean delete(String itemId) throws SQLException {
-        // apply orm to layered project
-        Session session = factoryConfiguration.getSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            Item item = session.get(Item.class, itemId);
-            if (item == null){
-                return false;
-            }
-            session.remove(item);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            transaction.rollback();
-            return false;
-        } finally {
-            if (session != null){
-                session.close();
-            }
-        }
-/*
         return SQLUtil.execute("delete from Item where item_id = ?",itemId);
-*/
     }
 
     public boolean update(Item entity) throws SQLException {
-        // apply orm to layered project
-        Session session = factoryConfiguration.getSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            session.merge(entity);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            transaction.rollback();
-            return false;
-        } finally {
-            if (session != null){
-                session.close();
-            }
-        }
-        /*return  SQLUtil.execute("update Item set name =?, quantity = ?, price = ? where item_id = ?",
+        return  SQLUtil.execute("update Item set name =?, quantity = ?, price = ? where item_id = ?",
                 entity.getItemName(),
                 entity.getQuantity(),
                 entity.getUnitPrice(),
                 entity.getItemId()
-                );*/
+                );
 
     }
 }

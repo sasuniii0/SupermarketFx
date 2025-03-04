@@ -89,11 +89,12 @@ public class OrderBOImpl implements OrderBO {
 
     @Override
     public boolean saveOrderDetail(OrderDetailsDto orderDetailsDto) throws SQLException {
-        return orderDetailDAO.save(new OrderDetails(
+        /*return orderDetailDAO.save(new OrderDetails(
                 orderDetailsDto.getOrderId(),
                 orderDetailsDto.getItemId(),
                 orderDetailsDto.getQtyOnHand(),
                 orderDetailsDto.getPrice()
-        ));
+        ));*/
+        return false;
     }
 }

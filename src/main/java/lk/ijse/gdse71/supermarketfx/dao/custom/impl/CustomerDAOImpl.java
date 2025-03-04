@@ -2,15 +2,12 @@ package lk.ijse.gdse71.supermarketfx.dao.custom.impl;
 
 import lk.ijse.gdse71.supermarketfx.config.FactoryConfiguration;
 import lk.ijse.gdse71.supermarketfx.dao.custom.CustomerDAO;
-import lk.ijse.gdse71.supermarketfx.dao.SQLUtil;
 import lk.ijse.gdse71.supermarketfx.entity.Customer;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,21 +16,12 @@ public class CustomerDAOImpl implements CustomerDAO {
     // hama dao ekktama dagnnnwa...
     private final FactoryConfiguration factoryConfiguration = FactoryConfiguration.getInstance();
 
-    public ArrayList<Customer> getAll() throws SQLException {
-        ResultSet rst = SQLUtil.execute("select * from Customer");
-        ArrayList<Customer> entity = new ArrayList<>();
-
-        while (rst.next()) {
-            Customer customerDto = new Customer(
-                    rst.getString(1),
-                    rst.getString(2),
-                    rst.getString(3),
-                    rst.getString(4),
-                    rst.getString(5)
-            );
-            entity.add(customerDto);
-        }
-        return entity;
+    @Override
+    public List<Customer> getAll() throws SQLException {
+        Session session = factoryConfiguration.getSession();
+        Query<Customer> query = session.createQuery("from Customer", Customer.class);
+        List<Customer> list = query.list();
+        return list;
     }
 
     public boolean save(Customer entity) throws SQLException {
@@ -62,8 +50,18 @@ public class CustomerDAOImpl implements CustomerDAO {
         );*/
     }
     public String getLastId() throws SQLException {
-        ResultSet rst = SQLUtil.execute("SELECT customer_id FROM Customer ORDER BY customer_id DESC LIMIT 1");
-        return rst.next() ? rst.getString(1) : null;
+        Session session = factoryConfiguration.getSession();
+        try {
+            Query<String> query = session.createQuery("SELECT c.customerId FROM Customer c ORDER BY c.customerId DESC", String.class);
+            query.setMaxResults(1);
+            return query.uniqueResult();
+        } catch (Exception e) {
+            throw new SQLException("Error retrieving last customer ID", e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 
     /*public String getNextId() throws SQLException {

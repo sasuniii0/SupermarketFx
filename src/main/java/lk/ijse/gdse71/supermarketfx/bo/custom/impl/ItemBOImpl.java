@@ -9,16 +9,18 @@ import lk.ijse.gdse71.supermarketfx.entity.Item;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class ItemBOImpl implements ItemBO {
     ItemDAO itemDAO = (ItemDAO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ITEM);
     @Override
-    public ArrayList<String> getAllItemIds() throws SQLException {
+    public List<Item> getAllItemIds() throws SQLException {
         return itemDAO.getAllItemIds();
     }
 
     @Override
-    public ItemDto findById(String selecteItemId) throws SQLException {
+    public Optional<Item> findById(String selecteItemId) throws SQLException {
         return itemDAO.findById(selecteItemId);
     }
 
@@ -49,12 +51,13 @@ public class ItemBOImpl implements ItemBO {
 
     @Override
     public boolean saveItem(ItemDto itemDto) throws SQLException {
-        return itemDAO.save(new Item(
+        /*return itemDAO.save(new Item(
                 itemDto.getItemId(),
                 itemDto.getItemName(),
                 itemDto.getQuantity(),
                 itemDto.getUnitPrice()
-        ));
+        ));*/
+        return false;
     }
 
     @Override
@@ -64,12 +67,13 @@ public class ItemBOImpl implements ItemBO {
 
     @Override
     public boolean updateItem(ItemDto itemDto) throws SQLException {
-        return itemDAO.update(new Item(
+        /*return itemDAO.update(new Item(
                 itemDto.getItemId(),
                 itemDto.getItemName(),
                 itemDto.getQuantity(),
                 itemDto.getUnitPrice()
-        ));
+        ));*/
+        return false;
     }
     public String generateNextItemId() throws SQLException {
         String lastId = itemDAO.getLastId(); // Call DAO method
