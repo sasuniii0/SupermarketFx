@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ItemBOImpl implements ItemBO {
-    ItemDAO itemDAO = (ItemDAO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ITEM);
+    ItemDAO itemDAO = DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ITEM);
     @Override
     public List<Item> getAllItemIds() throws SQLException {
         return itemDAO.getAllItemIds();

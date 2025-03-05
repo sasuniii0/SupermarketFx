@@ -11,18 +11,12 @@ import javafx.scene.input.MouseEvent;
 import lk.ijse.gdse71.supermarketfx.bo.BOFactory;
 import lk.ijse.gdse71.supermarketfx.bo.custom.CustomerBO;
 import lk.ijse.gdse71.supermarketfx.bo.custom.ItemBO;
-import lk.ijse.gdse71.supermarketfx.bo.custom.OrderBO;
-import lk.ijse.gdse71.supermarketfx.dao.DAOFactory;
-import lk.ijse.gdse71.supermarketfx.dto.CustomerDto;
-import lk.ijse.gdse71.supermarketfx.dto.ItemDto;
+import lk.ijse.gdse71.supermarketfx.bo.custom.PlaceOrderBO;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDetailsDto;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDto;
 import lk.ijse.gdse71.supermarketfx.entity.Customer;
 import lk.ijse.gdse71.supermarketfx.entity.Item;
 import lk.ijse.gdse71.supermarketfx.view.tdm.CartTm;
-import lk.ijse.gdse71.supermarketfx.dao.custom.impl.CustomerDAOImpl;
-import lk.ijse.gdse71.supermarketfx.dao.custom.impl.ItemDAOImpl;
-import lk.ijse.gdse71.supermarketfx.dao.custom.impl.OrderDAOImpl;
 
 import java.net.URL;
 import java.sql.Date;
@@ -97,7 +91,7 @@ public class OrderController implements Initializable {
 
     CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
     ItemBO itemBO = (ItemBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM);
-    OrderBO orderBO = (OrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER);
+    PlaceOrderBO placeOrderBO = (PlaceOrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER);
 
     private final ObservableList<CartTm> cartTms = FXCollections.observableArrayList();
 
@@ -198,7 +192,7 @@ public class OrderController implements Initializable {
         );
         //boolean isSaved = orderModel.saveOrder(orderDto);
         System.out.println("Saving order: " + orderDto);
-        boolean isSaved = orderBO.saveOrder(orderDto);
+        boolean isSaved = placeOrderBO.saveOrder(orderDto);
         System.out.println("Order saved status: " + isSaved);
 
         if (isSaved){
@@ -249,7 +243,7 @@ public class OrderController implements Initializable {
     }
 
     private void refreshPage() throws SQLException {
-        LblOrder.setText(orderBO.getNextOrderId());
+        LblOrder.setText(placeOrderBO.getNextOrderId());
         LblOrderDate.setText(LocalDate.now().toString());
 
         loadCustomerIds();

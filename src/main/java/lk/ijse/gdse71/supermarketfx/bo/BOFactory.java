@@ -2,7 +2,7 @@ package lk.ijse.gdse71.supermarketfx.bo;
 
 import lk.ijse.gdse71.supermarketfx.bo.custom.impl.CustomerBOImpl;
 import lk.ijse.gdse71.supermarketfx.bo.custom.impl.ItemBOImpl;
-import lk.ijse.gdse71.supermarketfx.bo.custom.impl.OrderBOImpl;
+import lk.ijse.gdse71.supermarketfx.bo.custom.impl.PlacePlaceOrderBOImpl;
 
 public class BOFactory {
     private static BOFactory boFactory;
@@ -22,7 +22,7 @@ public class BOFactory {
             case ITEM:
                 return new ItemBOImpl();
             case ORDER:
-                return new OrderBOImpl();
+                return new PlacePlaceOrderBOImpl();
             default:
                 return null;
         }

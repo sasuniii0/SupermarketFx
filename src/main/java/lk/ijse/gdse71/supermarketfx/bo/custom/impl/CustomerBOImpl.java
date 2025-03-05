@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class CustomerBOImpl implements CustomerBO {
 
-    CustomerDAO customerDAO = (CustomerDAO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.CUSTOMER);
+    CustomerDAO customerDAO = DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.CUSTOMER);
 
     @Override
     public ArrayList<CustomerDto> getAllCustomers() throws SQLException {

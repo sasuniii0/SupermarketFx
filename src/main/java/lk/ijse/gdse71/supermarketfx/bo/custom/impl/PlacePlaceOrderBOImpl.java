@@ -1,41 +1,48 @@
 package lk.ijse.gdse71.supermarketfx.bo.custom.impl;
 
-import lk.ijse.gdse71.supermarketfx.bo.custom.OrderBO;
+import lk.ijse.gdse71.supermarketfx.bo.custom.PlaceOrderBO;
 import lk.ijse.gdse71.supermarketfx.dao.DAOFactory;
 import lk.ijse.gdse71.supermarketfx.dao.SQLUtil;
 import lk.ijse.gdse71.supermarketfx.dao.custom.ItemDAO;
 import lk.ijse.gdse71.supermarketfx.dao.custom.OrderDAO;
-import lk.ijse.gdse71.supermarketfx.dao.custom.OrderDetailDAO;
 import lk.ijse.gdse71.supermarketfx.db.DBConnection;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDetailsDto;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDto;
-import lk.ijse.gdse71.supermarketfx.entity.OrderDetails;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class OrderBOImpl implements OrderBO {
+public class PlacePlaceOrderBOImpl implements PlaceOrderBO {
 
-    OrderDAO orderDAO = (OrderDAO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ORDER);
-    OrderDetailDAO orderDetailDAO = (OrderDetailDAO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ORDER_DETAIL);
-    ItemDAO itemDAO = (ItemDAO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ITEM);
+    OrderDAO orderDAO = DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ORDER);
+    ItemDAO itemDAO = DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ITEM);
 
     @Override
     public String getNextOrderId() throws SQLException {
         return generateNextOrderId();
     }
     public String generateNextOrderId() throws SQLException {
-        String lastId = orderDAO.getLastId(); // Call DAO method
-        if (lastId != null) {
-            String subString = lastId.substring(1);
-            int i = Integer.parseInt(subString);
-            int newIndex = i + 1;
-            return String.format("O%03d", newIndex);
+        String lastId = orderDAO.getLastId(); // Retrieve the last ID from DB
+
+        if (lastId == null || lastId.isEmpty()) {
+            return "O001"; // Default ID when no previous records exist
         }
-        return "O001";
+
+        try {
+            // Assuming IDs are in the format "O001", "O002", etc.
+            String prefix = lastId.substring(0, 1); // Extract "O"
+            String numberPart = lastId.substring(1); // Extract "001"
+
+            int nextNumber = Integer.parseInt(numberPart) + 1; // Increment number
+            return String.format("%s%03d", prefix, nextNumber); // Format as "O002"
+        } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
+            e.printStackTrace();
+            return "O001"; // Fallback if parsing fails
+        }
     }
+
 
 
     public boolean saveOrder(OrderDto orderDto) throws SQLException {
