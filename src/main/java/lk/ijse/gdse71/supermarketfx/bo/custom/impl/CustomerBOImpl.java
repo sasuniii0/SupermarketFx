@@ -1,6 +1,8 @@
 package lk.ijse.gdse71.supermarketfx.bo.custom.impl;
 
 import lk.ijse.gdse71.supermarketfx.bo.custom.CustomerBO;
+import lk.ijse.gdse71.supermarketfx.bo.exception.DuplicateException;
+import lk.ijse.gdse71.supermarketfx.bo.exception.NotFoundException;
 import lk.ijse.gdse71.supermarketfx.dao.DAOFactory;
 import lk.ijse.gdse71.supermarketfx.dao.custom.CustomerDAO;
 import lk.ijse.gdse71.supermarketfx.dto.CustomerDto;
@@ -13,7 +15,7 @@ import java.util.Optional;
 
 public class CustomerBOImpl implements CustomerBO {
 
-    CustomerDAO customerDAO = DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.CUSTOMER);
+    CustomerDAO customerDAO = (CustomerDAO) DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.CUSTOMER);
 
     @Override
     public ArrayList<CustomerDto> getAllCustomers() throws SQLException {
@@ -38,7 +40,14 @@ public class CustomerBOImpl implements CustomerBO {
 /*
         return customerDAO.save(new Customer(customerDto.getCustomerId(), customerDto.getCustomerName(), customerDto.getNic(), customerDto.getEmail(), customerDto.getPhone()));
 */
-    return false;
+        try{
+            customerDAO.save(new Customer());
+        }catch (DuplicateException e){
+            e.getMessage();
+        }catch (Exception e){
+            e.getMessage();
+        }
+        return false;
     }
 
     @Override
@@ -58,7 +67,14 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public boolean deleteCustomer(String customerId) throws SQLException {
-        return customerDAO.delete(customerId);
+        try{
+            customerDAO.delete(customerId);
+        }catch (NotFoundException e){
+            e.getMessage();
+        }catch (Exception e){
+            e.getMessage();
+        }
+        return false;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package lk.ijse.gdse71.supermarketfx.dao.custom.impl;
 
+import lk.ijse.gdse71.supermarketfx.bo.exception.DuplicateException;
+import lk.ijse.gdse71.supermarketfx.bo.exception.NotFoundException;
 import lk.ijse.gdse71.supermarketfx.config.FactoryConfiguration;
 import lk.ijse.gdse71.supermarketfx.dao.custom.CustomerDAO;
 import lk.ijse.gdse71.supermarketfx.entity.Customer;
@@ -29,6 +31,12 @@ public class CustomerDAOImpl implements CustomerDAO {
         Session session = factoryConfiguration.getSession();
         Transaction transaction = session.beginTransaction();
         try {
+
+            Customer customer = session.get(Customer.class, entity.getCustomerId());
+            if (customer != null){
+                //Already exists duplicates
+                throw new DuplicateException("CustomerId is Duplicated");
+            }
             session.persist(entity);
             transaction.commit();
             return true;
@@ -125,8 +133,11 @@ public class CustomerDAOImpl implements CustomerDAO {
         try {
             Customer customer = session.get(Customer.class, customerId);
             if (customer == null){
-                return false;
+                //Not found
+                throw new NotFoundException("No customer found to delete");
             }
+            // customer have order
+            // In use
             session.remove(customer);
             transaction.commit();
             return true;
