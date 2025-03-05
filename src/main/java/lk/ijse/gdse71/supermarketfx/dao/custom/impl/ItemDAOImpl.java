@@ -65,6 +65,16 @@ public class ItemDAOImpl implements ItemDAO {
         );*/
     }
 
+    @Override
+    public boolean updateItemWithOrder(Session session, Item item) {
+        try{
+            session.merge(item);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public List<Item> getAll() throws SQLException {
         Session session = factoryConfiguration.getSession();
         Query<Item> query = session.createQuery("from Item ", Item.class);

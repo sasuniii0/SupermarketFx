@@ -15,14 +15,15 @@ public class BOFactory {
     public enum BOTypes{
         CUSTOMER,ITEM,ORDER
     }
-    public SuperBO getBO(BOTypes boTypes){
+    @SuppressWarnings("unchecked")
+    public <T> T getBO(BOTypes boTypes){
         switch (boTypes){
             case CUSTOMER:
-                return new CustomerBOImpl();
+                return(T) new CustomerBOImpl();
             case ITEM:
-                return new ItemBOImpl();
+                return(T) new ItemBOImpl();
             case ORDER:
-                return new PlacePlaceOrderBOImpl();
+                return(T) new PlacePlaceOrderBOImpl();
             default:
                 return null;
         }

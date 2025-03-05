@@ -7,15 +7,24 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import lk.ijse.gdse71.supermarketfx.bo.BOFactory;
+import lk.ijse.gdse71.supermarketfx.bo.custom.PlaceOrderBO;
 import lk.ijse.gdse71.supermarketfx.config.FactoryConfiguration;
 import lk.ijse.gdse71.supermarketfx.dao.DAOFactory;
+import lk.ijse.gdse71.supermarketfx.dao.custom.OrderDetailDAO;
 import lk.ijse.gdse71.supermarketfx.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.gdse71.supermarketfx.dao.custom.impl.ItemDAOImpl;
+import lk.ijse.gdse71.supermarketfx.dto.OrderDetailsDto;
+import lk.ijse.gdse71.supermarketfx.dto.OrderDto;
 import lk.ijse.gdse71.supermarketfx.entity.Customer;
 import lk.ijse.gdse71.supermarketfx.entity.Item;
 import org.hibernate.Session;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class AppInitializer extends Application {
@@ -61,15 +70,15 @@ public class AppInitializer extends Application {
 //        session.close();
         // hadala iwra krla run krl blnna one...
 
-        CustomerDAOImpl customerDAO= DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.CUSTOMER);
+        /*CustomerDAOImpl customerDAO= DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.CUSTOMER);
         Optional<Customer> customer = customerDAO.findById("C001");
 
         ItemDAOImpl itemDAO = DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ITEM);
         Optional<Item> item = itemDAO.findById("I001");
 
-        /*if (!customer.isEmpty()) {
+        *//*if (!customer.isEmpty()) {
             Customer customer1 = customer.get();
-        }*/
+        }*//*
         // have data
 
         if (customer.isPresent()) {
@@ -77,7 +86,31 @@ public class AppInitializer extends Application {
         }
         if (item.isPresent()) {
             Item item1 = item.get();
-        }
+        }*/
+
+        //place order
+
+        PlaceOrderBO placeOrderBO = BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER);
+
+        String orderId = "O001";
+        OrderDto orderDto = new OrderDto();
+        orderDto.setOrderId(orderId);
+        orderDto.setCustomerId("C001");
+        orderDto.setOrderDate(Date.valueOf(LocalDate.now()));
+
+        OrderDetailsDto orderDetailDAO = new OrderDetailsDto();
+        orderDetailDAO.setOrderId(orderId);
+        orderDetailDAO.setItemId("I003");
+        orderDetailDAO.setPrice(10);
+
+        ArrayList<OrderDetailsDto> orderDetailsDtos = new ArrayList<>();
+        orderDetailsDtos.add(orderDetailDAO);
+
+        orderDto.setOrderDetailsDtos(orderDetailsDtos);
+        boolean b = placeOrderBO.saveOrder(orderDto);
+        System.out.println(b);
+
+
         launch(args);
     }
 }

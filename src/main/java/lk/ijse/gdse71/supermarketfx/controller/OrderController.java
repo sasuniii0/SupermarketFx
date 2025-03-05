@@ -191,9 +191,7 @@ public class OrderController implements Initializable {
                 orderDetailsDtos
         );
         //boolean isSaved = orderModel.saveOrder(orderDto);
-        System.out.println("Saving order: " + orderDto);
         boolean isSaved = placeOrderBO.saveOrder(orderDto);
-        System.out.println("Order saved status: " + isSaved);
 
         if (isSaved){
             new Alert(Alert.AlertType.INFORMATION, "Order Placed", ButtonType.OK).show();

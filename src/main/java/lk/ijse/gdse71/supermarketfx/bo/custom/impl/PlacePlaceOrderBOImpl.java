@@ -1,23 +1,32 @@
 package lk.ijse.gdse71.supermarketfx.bo.custom.impl;
 
 import lk.ijse.gdse71.supermarketfx.bo.custom.PlaceOrderBO;
+import lk.ijse.gdse71.supermarketfx.config.FactoryConfiguration;
 import lk.ijse.gdse71.supermarketfx.dao.DAOFactory;
 import lk.ijse.gdse71.supermarketfx.dao.SQLUtil;
+import lk.ijse.gdse71.supermarketfx.dao.custom.CustomerDAO;
 import lk.ijse.gdse71.supermarketfx.dao.custom.ItemDAO;
 import lk.ijse.gdse71.supermarketfx.dao.custom.OrderDAO;
 import lk.ijse.gdse71.supermarketfx.db.DBConnection;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDetailsDto;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDto;
+import lk.ijse.gdse71.supermarketfx.entity.*;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class PlacePlaceOrderBOImpl implements PlaceOrderBO {
 
     OrderDAO orderDAO = DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ORDER);
     ItemDAO itemDAO = DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ITEM);
+    CustomerDAO customerDAO = DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.CUSTOMER);
 
     @Override
     public String getNextOrderId() throws SQLException {
@@ -46,7 +55,7 @@ public class PlacePlaceOrderBOImpl implements PlaceOrderBO {
 
 
     public boolean saveOrder(OrderDto orderDto) throws SQLException {
-        Connection connection = DBConnection.getInstance().getConnection();
+        /*Connection connection = DBConnection.getInstance().getConnection();
         try{
             connection.setAutoCommit(false);
 
@@ -76,6 +85,97 @@ public class PlacePlaceOrderBOImpl implements PlaceOrderBO {
             return false;
         }finally {
             connection.setAutoCommit(true);
+        }*/
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        try{
+            //save order,order details, update item
+            String orderId = orderDto.getOrderId();
+            // check order id exist
+            Optional<Order> byId = orderDAO.findById(orderId);
+            if (byId.isPresent()){
+                transaction.rollback();
+                return false;
+            }
+
+            String customerId = orderDto.getCustomerId();
+            Optional<Customer> bycustId = customerDAO.findById(customerId);
+            if (bycustId.isEmpty()){
+                transaction.rollback();
+                return false;
+            }
+
+            // need to validate date
+            Customer customer = bycustId.get();
+            Order order = new Order();
+            order.setOrderId(orderId);
+            order.setOrderDate(orderDto.getOrderDate());
+            order.setCustomer(customer);
+
+            List<OrderDetails> orderDetails = new ArrayList<>();
+            ArrayList<OrderDetailsDto> orderDetailsDtos = orderDto.getOrderDetailsDtos();
+            for (OrderDetailsDto orderDetailsDto : orderDetailsDtos) {
+                String itemId = orderDetailsDto.getItemId();
+                Optional<Item> optionalItem = itemDAO.findById(itemId);
+
+                //if not found item
+                if (optionalItem.isEmpty()){
+                    transaction.rollback();
+                    return false;
+                }
+                Item item = optionalItem.get();
+
+                OrderDetailId orderDetailId = new OrderDetailId(orderId, itemId);
+
+                OrderDetails orderDetail = new OrderDetails();
+                orderDetail.setId(orderDetailId);
+                orderDetail.setOrder(order);
+                orderDetail.setItem(item);
+                orderDetail.setQtyOnHand(orderDetailsDto.getQtyOnHand());
+                orderDetail.setPrice(BigDecimal.valueOf(orderDetailsDto.getPrice()));
+
+                orderDetails.add(orderDetail);
+            }
+            order.setOrderDetailsList(orderDetails);
+            //save order --> order details save wenw...
+            boolean isOrderSaved = orderDAO.saveOrderWithOrderDetails(session, order);
+            if (!isOrderSaved){
+                transaction.rollback();
+                return false;
+            }
+            for (OrderDetails orderDetail : orderDetails) {
+                String itemId = orderDetail.getItem().getItemId();
+                Optional<Item> optionalItem = itemDAO.findById(itemId);
+
+                if (optionalItem.isEmpty()){
+                    transaction.rollback();
+                    return false;
+                }
+                Item item = optionalItem.get();
+                if (item.getQuantity() < orderDetail.getQtyOnHand()){
+                    //5<10
+                    transaction.rollback();
+                    return false;
+                }
+                item.setQuantity(item.getQuantity()-orderDetail.getQtyOnHand());
+
+                boolean isItemUpdated = itemDAO.updateItemWithOrder(session, item);
+                if (!isItemUpdated){
+                    transaction.rollback();
+                    return false;
+                }
+            }
+            transaction.commit();
+            return true;
+        }catch (Exception e){
+            transaction.rollback();
+            return false;
+        }
+        finally {
+            if (session!=null){
+                session.close();
+            }
         }
     }
 

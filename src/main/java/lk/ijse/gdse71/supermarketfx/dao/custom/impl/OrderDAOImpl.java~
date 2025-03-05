@@ -88,8 +88,7 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public boolean saveOrderWithOrderDetails(Session session, Order order) {
         try{
-            //data if exist update, no data save
-            session.merge(order);
+            session.persist(order);
             return true;
         }catch(Exception e){
             e.printStackTrace();
