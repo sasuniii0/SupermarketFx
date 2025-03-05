@@ -27,25 +27,15 @@ public class OrderBOImpl implements OrderBO {
         return generateNextOrderId();
     }
     public String generateNextOrderId() throws SQLException {
-        String lastId = orderDAO.getLastId(); // Retrieve the last ID from DB
-
-        if (lastId == null || lastId.isEmpty()) {
-            return "O001"; // Default ID when no previous records exist
+        String lastId = orderDAO.getLastId(); // Call DAO method
+        if (lastId != null) {
+            String subString = lastId.substring(1);
+            int i = Integer.parseInt(subString);
+            int newIndex = i + 1;
+            return String.format("O%03d", newIndex);
         }
-
-        try {
-            // Assuming IDs are in the format "O001", "O002", etc.
-            String prefix = lastId.substring(0, 1); // Extract "O"
-            String numberPart = lastId.substring(1); // Extract "001"
-
-            int nextNumber = Integer.parseInt(numberPart) + 1; // Increment number
-            return String.format("%s%03d", prefix, nextNumber); // Format as "O002"
-        } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
-            e.printStackTrace();
-            return "O001"; // Fallback if parsing fails
-        }
+        return "O001";
     }
-
 
 
     public boolean saveOrder(OrderDto orderDto) throws SQLException {

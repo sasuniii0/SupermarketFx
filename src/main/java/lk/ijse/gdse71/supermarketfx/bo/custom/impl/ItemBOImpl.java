@@ -76,14 +76,24 @@ public class ItemBOImpl implements ItemBO {
         return false;
     }
     public String generateNextItemId() throws SQLException {
-        String lastId = itemDAO.getLastId(); // Call DAO method
-        if (lastId != null) {
-            String subString = lastId.substring(1);
-            int i = Integer.parseInt(subString);
-            int newIndex = i + 1;
-            return String.format("I%03d", newIndex);
+        String lastId = itemDAO.getLastId(); // Retrieve the last ID from DB
+
+        if (lastId == null || lastId.isEmpty()) {
+            return "I001"; // Default ID when no previous records exist
         }
-        return "I001";
+
+        try {
+            // Assuming IDs are in the format "I001", "I002", etc.
+            String prefix = lastId.substring(0, 1); // Extract "I"
+            String numberPart = lastId.substring(1); // Extract "001"
+
+            int nextNumber = Integer.parseInt(numberPart) + 1; // Increment number
+            return String.format("%s%03d", prefix, nextNumber); // Format as "I002"
+        } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
+            e.printStackTrace();
+            return "I001"; // Fallback if parsing fails
+        }
     }
+
 
 }

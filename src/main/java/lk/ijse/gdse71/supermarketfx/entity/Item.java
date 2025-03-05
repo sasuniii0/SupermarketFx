@@ -14,14 +14,14 @@ import java.util.List;
 @Table(name = "Item")
 public class Item {
     @Id
-    @Column(name = "itemId")
+    @Column(name = "item_id")
     private String itemId;
 
-    @Column(length = 100)
+    @Column(length = 100 , name = "name")
     private String itemName;
     private int quantity;
 
-    @Column(scale = 2,name = "unit_price",precision = 10)
+    @Column(name = "price")
     private double unitPrice;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)

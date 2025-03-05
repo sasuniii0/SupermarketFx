@@ -13,18 +13,23 @@ public class DAOFactory {
     public enum DAOTypes{
         CUSTOMER,ITEM,ORDER,ORDER_DETAIL,QUERY
     }
-    public SuperDAO getDao(DAOTypes daoTypes){
+
+    // superdao eken inherit una class withrai use krnn puluwn
+    //warning nathi krnna me annotation eka use krnwa...
+    @SuppressWarnings("unchecked")
+    public <T extends SuperDAO>T getDao(DAOTypes daoTypes){
+        // casting
         switch (daoTypes){
             case CUSTOMER:
-                return new CustomerDAOImpl();
+                return (T) new CustomerDAOImpl();
             case ITEM:
-                return new ItemDAOImpl();
+                return (T) new ItemDAOImpl();
             case ORDER:
-                return new OrderDAOImpl();
+                return (T) new OrderDAOImpl();
             case ORDER_DETAIL:
-                return new OrderDetailsDAOImpl();
+                return (T) new OrderDetailsDAOImpl();
             case QUERY:
-                return new QueryDAOImpl();
+                return (T) new QueryDAOImpl();
             default:
                 return null;
         }

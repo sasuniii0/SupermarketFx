@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Embeddable
 public class OrderDetailId {
-    private String orderId;
-    private String itemId;
+    private String order_id;
+    private String item_id;
 }

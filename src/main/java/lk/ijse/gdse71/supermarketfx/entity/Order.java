@@ -15,12 +15,13 @@ import java.util.List;
 @Table(name = "Orders")
 public class Order {
     @Id
-    @Column(name = "orderId")
+    @Column(name = "order_id")
     private String orderId;
+    @Column(name = "order_date")
     private Date orderDate;
 
     @ManyToOne
-    @JoinColumn(name = "customerId")
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)

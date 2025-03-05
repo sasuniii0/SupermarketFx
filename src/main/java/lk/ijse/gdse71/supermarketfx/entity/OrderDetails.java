@@ -16,15 +16,15 @@ public class OrderDetails {
 
     @ManyToOne
     @MapsId("orderId")
-    @JoinColumn(name = "orderId")
+    @JoinColumn(name = "order_id")
     private Order order;
 
     @ManyToOne
     @MapsId("itemId")
-    @JoinColumn(name = "itemId")
+    @JoinColumn(name = "item_id")
     private Item item;
     private int qtyOnHand;
 
-    @Column(scale = 2,name = "unit_price",precision = 10)
+    @Column
     private double price;
 }

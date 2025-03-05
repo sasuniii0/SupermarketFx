@@ -221,7 +221,7 @@ public class OrderController implements Initializable {
         Optional<Customer> customerDto = customerBO.findById(selectedCustId);
 
         if (customerDto != null) {
-            LblCustName.setText(customerDto.get().getName());
+            LblCustName.setText(customerDto.get().getCustomerName());
         }
     }
 

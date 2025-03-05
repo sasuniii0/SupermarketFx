@@ -13,9 +13,10 @@ import java.util.List;
 @Table(name = "Customer")
 public class Customer {
     @Id
-    @Column(name = "customerId")
+    @Column(name = "customer_id")
     private String customerId;
-    private String customerName;
+    @Column(name = "name")
+    private String name;
     private String nic;
     private String email;
     private String phone;

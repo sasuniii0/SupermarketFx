@@ -23,7 +23,7 @@ public class CustomerBOImpl implements CustomerBO {
         for (Customer customer : customerDtos) {
             CustomerDto customerDto = new CustomerDto(
                     customer.getCustomerId(),
-                    customer.getCustomerName(),
+                    customer.getName(),
                     customer.getNic(),
                     customer.getEmail(),
                     customer.getPhone()
@@ -69,15 +69,25 @@ public class CustomerBOImpl implements CustomerBO {
     return false;
     }
     public String generateNextCustomerId() throws SQLException {
-        String lastId = customerDAO.getLastId(); // Fetch the last ID from DB
-        if (lastId != null) {
-            String subString = lastId.substring(1);
-            int i = Integer.parseInt(subString);
-            int newIndex = i + 1;
-            return String.format("C%03d", newIndex); // Format as C001, C002...
+        String lastId = customerDAO.getLastId(); // Retrieve the last ID from DB
+
+        if (lastId == null || lastId.isEmpty()) {
+            return "C001"; // Default ID when no previous records exist
         }
-        return "C001"; // Default if no customers exist
+
+        try {
+            // Assuming IDs are in the format "C001", "C002", etc.
+            String prefix = lastId.substring(0, 1); // Extract "C"
+            String numberPart = lastId.substring(1); // Extract "001"
+
+            int nextNumber = Integer.parseInt(numberPart) + 1; // Increment number
+            return String.format("%s%03d", prefix, nextNumber); // Format as "C002"
+        } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
+            e.printStackTrace();
+            return "C001"; // Fallback if parsing fails
+        }
     }
+
 
 
 }

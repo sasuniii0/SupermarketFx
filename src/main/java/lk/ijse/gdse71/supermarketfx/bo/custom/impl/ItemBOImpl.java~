@@ -51,12 +51,13 @@ public class ItemBOImpl implements ItemBO {
 
     @Override
     public boolean saveItem(ItemDto itemDto) throws SQLException {
-        return itemDAO.save(new Item(
+        /*return itemDAO.save(new Item(
                 itemDto.getItemId(),
                 itemDto.getItemName(),
                 itemDto.getQuantity(),
                 itemDto.getUnitPrice()
-        ));
+        ));*/
+        return false;
     }
 
     @Override
@@ -66,12 +67,13 @@ public class ItemBOImpl implements ItemBO {
 
     @Override
     public boolean updateItem(ItemDto itemDto) throws SQLException {
-        return itemDAO.update(new Item(
+        /*return itemDAO.update(new Item(
                 itemDto.getItemId(),
                 itemDto.getItemName(),
                 itemDto.getQuantity(),
                 itemDto.getUnitPrice()
-        ));
+        ));*/
+        return false;
     }
     public String generateNextItemId() throws SQLException {
         String lastId = itemDAO.getLastId(); // Call DAO method

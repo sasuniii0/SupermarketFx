@@ -8,8 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import lk.ijse.gdse71.supermarketfx.config.FactoryConfiguration;
+import lk.ijse.gdse71.supermarketfx.dao.DAOFactory;
 import lk.ijse.gdse71.supermarketfx.dao.custom.impl.CustomerDAOImpl;
+import lk.ijse.gdse71.supermarketfx.dao.custom.impl.ItemDAOImpl;
 import lk.ijse.gdse71.supermarketfx.entity.Customer;
+import lk.ijse.gdse71.supermarketfx.entity.Item;
 import org.hibernate.Session;
 
 import java.sql.SQLException;
@@ -58,8 +61,11 @@ public class AppInitializer extends Application {
 //        session.close();
         // hadala iwra krla run krl blnna one...
 
-        CustomerDAOImpl customerDAO= new CustomerDAOImpl();
+        CustomerDAOImpl customerDAO= DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.CUSTOMER);
         Optional<Customer> customer = customerDAO.findById("C001");
+
+        ItemDAOImpl itemDAO = DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ITEM);
+        Optional<Item> item = itemDAO.findById("I001");
 
         /*if (!customer.isEmpty()) {
             Customer customer1 = customer.get();
@@ -68,6 +74,9 @@ public class AppInitializer extends Application {
 
         if (customer.isPresent()) {
             Customer customer1 = customer.get();
+        }
+        if (item.isPresent()) {
+            Item item1 = item.get();
         }
         launch(args);
     }
