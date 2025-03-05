@@ -7,6 +7,7 @@ import lk.ijse.gdse71.supermarketfx.dto.ItemDto;
 import lk.ijse.gdse71.supermarketfx.dto.OrderDetailsDto;
 import lk.ijse.gdse71.supermarketfx.entity.Item;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.Optional;
 public class ItemBOImpl implements ItemBO {
     ItemDAO itemDAO = DAOFactory.getDaoFactory().getDao(DAOFactory.DAOTypes.ITEM);
     @Override
-    public List<Item> getAllItemIds() throws SQLException {
+    public List<String> getAllItemIds() throws SQLException {
         return itemDAO.getAllItemIds();
     }
 
@@ -36,9 +37,9 @@ public class ItemBOImpl implements ItemBO {
         for (Item item : items) {
             itemDtos.add(new ItemDto(
                     item.getItemId(),
-                    item.getItemName(),
+                    item.getName(),
                     item.getQuantity(),
-                    item.getUnitPrice()
+                    item.getUnitPrice().doubleValue()
             ));
         }
         return itemDtos;

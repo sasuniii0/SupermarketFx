@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ItemBO extends SuperBO {
-     List<Item> getAllItemIds() throws SQLException ;
+     List<String> getAllItemIds() throws SQLException ;
      Optional<Item> findById(String selecteItemId) throws SQLException;
      boolean reduceQty(OrderDetailsDto orderDetailsDto) throws SQLException ;
      ArrayList<ItemDto> getAllItems() throws SQLException ;

@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CustomerDAO extends CrudDAO<Customer> {
-     List<Customer> getAllCustomerIds() throws SQLException;
+     List<String> getAllCustomerIds() throws SQLException;
      Optional<Customer> findById(String selectedCustId) throws SQLException ;
 
      }

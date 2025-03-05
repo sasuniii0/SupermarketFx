@@ -20,10 +20,10 @@ import java.util.Optional;
 public class ItemDAOImpl implements ItemDAO {
     private final FactoryConfiguration factoryConfiguration = FactoryConfiguration.getInstance();
 
-    public List<Item> getAllItemIds() throws SQLException {
+    public List<String> getAllItemIds() throws SQLException {
         Session session = factoryConfiguration.getSession();
-        Query<Item> fromItem = session.createQuery("from Item", Item.class);
-        List<Item> items = fromItem.list();
+        Query<String> fromItem = session.createQuery("select i.id from Item i", String.class);
+        List<String> items = fromItem.list();
         return items;
     }
 

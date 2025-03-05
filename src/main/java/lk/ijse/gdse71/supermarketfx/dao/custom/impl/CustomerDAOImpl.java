@@ -31,6 +31,9 @@ public class CustomerDAOImpl implements CustomerDAO {
         Session session = factoryConfiguration.getSession();
         Transaction transaction = session.beginTransaction();
         try {
+            if (entity == null || entity.getCustomerId() == null) {
+                throw new IllegalArgumentException("Invalid customer entity or ID is null");
+            }
 
             Customer customer = session.get(Customer.class, entity.getCustomerId());
             if (customer != null){
@@ -41,6 +44,7 @@ public class CustomerDAOImpl implements CustomerDAO {
             transaction.commit();
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             transaction.rollback();
             return false;
         } finally {
@@ -58,19 +62,16 @@ public class CustomerDAOImpl implements CustomerDAO {
         );*/
     }
     public String getLastId() throws SQLException {
-        Session session = factoryConfiguration.getSession();
-        try {
+        try (Session session = factoryConfiguration.getSession()) { // Auto-close session
             Query<String> query = session.createQuery("SELECT c.customerId FROM Customer c ORDER BY c.customerId DESC", String.class);
             query.setMaxResults(1);
-            return query.uniqueResult();
+            return query.uniqueResult(); // May return null if no customers exist
         } catch (Exception e) {
+            System.err.println("Error retrieving last customer ID: " + e.getMessage());
             throw new SQLException("Error retrieving last customer ID", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
+
 
     /*public String getNextId() throws SQLException {
         ResultSet rst = SQLUtil.execute("select customer_id from Customer order by customer_id desc limit 1");
@@ -86,11 +87,11 @@ public class CustomerDAOImpl implements CustomerDAO {
     }*/
 
     // arraylist return krddi tight coupling hadenwa... list use krnn one eka nisa
-    public List<Customer> getAllCustomerIds() throws SQLException{
+    public List<String> getAllCustomerIds() throws SQLException{
         // apply orm to layered project
         Session session = factoryConfiguration.getSession();
-        Query<Customer> fromCustomer = session.createQuery("from Customer", Customer.class);
-        List<Customer> customers = fromCustomer.list();
+        Query<String> fromCustomer = session.createQuery("select c.id from Customer c", String.class);
+        List<String> customers = fromCustomer.list();
         return customers;
 
         // adin passe array list mehma hadnna one

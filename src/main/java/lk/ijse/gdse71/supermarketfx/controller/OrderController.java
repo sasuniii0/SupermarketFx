@@ -89,9 +89,9 @@ public class OrderController implements Initializable {
     @FXML
     private TableView<CartTm> TblOrder;
 
-    CustomerBO customerBO = (CustomerBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
-    ItemBO itemBO = (ItemBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM);
-    PlaceOrderBO placeOrderBO = (PlaceOrderBO) BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER);
+    CustomerBO customerBO = BOFactory.getBoFactory().getBO(BOFactory.BOTypes.CUSTOMER);
+    ItemBO itemBO = BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ITEM);
+    PlaceOrderBO placeOrderBO = BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER);
 
     private final ObservableList<CartTm> cartTms = FXCollections.observableArrayList();
 
@@ -223,7 +223,7 @@ public class OrderController implements Initializable {
         Optional<Item> itemDto = itemBO.findById(selecteItemId);
 
         if (itemDto != null) {
-            LblItemName.setText(itemDto.get().getItemName());
+            LblItemName.setText(itemDto.get().getName());
             LblQty.setText(String.valueOf(itemDto.get().getQuantity()));
             LblUnitPrice.setText(String.valueOf(itemDto.get().getUnitPrice()));
         }
@@ -260,16 +260,16 @@ public class OrderController implements Initializable {
     }
 
     private void loadItemId() throws SQLException {
-        List<Item> itemIds = itemBO.getAllItemIds();
+        List<String> itemIds = itemBO.getAllItemIds();
         ObservableList<String> observableList = FXCollections.observableArrayList();
         observableList.addAll(String.valueOf(itemIds));
         CmbItemId.setItems(observableList);
     }
 
     private void loadCustomerIds() throws SQLException {
-        List<Customer> customerIds = customerBO.getAllCustomerIds();
+        List<String> customerIds = customerBO.getAllCustomerIds();
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        observableList.addAll(String.valueOf(customerIds));
+        observableList.addAll(customerIds);
         CmbCustId.setItems(observableList);
     }
 

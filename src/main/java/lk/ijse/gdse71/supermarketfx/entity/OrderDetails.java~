@@ -25,6 +25,8 @@ public class OrderDetails {
     @MapsId("itemId")
     @JoinColumn(name = "item_id")
     private Item item;
+
+    @Column
     private int qtyOnHand;
 
     @Column

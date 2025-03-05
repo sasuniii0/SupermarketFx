@@ -165,7 +165,7 @@ public class CustomerController implements Initializable {
         String nic = TxtNic.getText();
         String email = TxtEmail.getText();
         String phone = TxtPhone.getText();
-
+        System.out.println(customerId);
         TxtCustomerName.setStyle(TxtCustomerName.getStyle()+";-fx-border-color: blue;");
         TxtNic.setStyle(TxtNic.getStyle()+";-fx-border-color: blue;");
         TxtEmail.setStyle(TxtEmail.getStyle()+";-fx-border-color: blue;");
@@ -201,6 +201,7 @@ public class CustomerController implements Initializable {
         }
 
         if (isValidEmail && isValidPhone && isValidName && isValidNic){
+
             CustomerDto customerDto = new CustomerDto(customerId, customerName, nic, email, phone);
 
             boolean isSaved = customerBO.saveCustomer(customerDto);

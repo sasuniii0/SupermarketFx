@@ -41,11 +41,23 @@ public class CustomerBOImpl implements CustomerBO {
         return customerDAO.save(new Customer(customerDto.getCustomerId(), customerDto.getCustomerName(), customerDto.getNic(), customerDto.getEmail(), customerDto.getPhone()));
 */
         try{
-            customerDAO.save(new Customer());
+            if (customerDto.getCustomerId() == null || customerDto.getCustomerId().isEmpty()) {
+                customerDto.setCustomerId(generateNextCustomerId());
+            }
+            Customer customer = new Customer(
+                    customerDto.getCustomerId(),
+                    customerDto.getCustomerName(),
+                    customerDto.getNic(),
+                    customerDto.getEmail(),
+                    customerDto.getPhone()
+            );
+            customerDAO.save(customer);
+            return true;
         }catch (DuplicateException e){
             e.getMessage();
         }catch (Exception e){
             e.getMessage();
+            e.printStackTrace();
         }
         return false;
     }
@@ -56,7 +68,7 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     @Override
-    public List<Customer> getAllCustomerIds() throws SQLException {
+    public List<String> getAllCustomerIds() throws SQLException {
         return customerDAO.getAllCustomerIds();
     }
 
@@ -88,7 +100,7 @@ public class CustomerBOImpl implements CustomerBO {
         String lastId = customerDAO.getLastId(); // Retrieve the last ID from DB
 
         if (lastId == null || lastId.isEmpty()) {
-            return "C001"; // Default ID when no previous records exist
+            return "C001"; // Default ID if no customers exist
         }
 
         try {

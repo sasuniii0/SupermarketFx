@@ -90,7 +90,7 @@ public class AppInitializer extends Application {
 
         //place order
 
-        PlaceOrderBO placeOrderBO = BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER);
+        /*PlaceOrderBO placeOrderBO = BOFactory.getBoFactory().getBO(BOFactory.BOTypes.ORDER);
 
         String orderId = "O001";
         OrderDto orderDto = new OrderDto();
@@ -110,7 +110,7 @@ public class AppInitializer extends Application {
         boolean b = placeOrderBO.saveOrder(orderDto);
         System.out.println(b);
 
-
+*/
         launch(args);
     }
 }

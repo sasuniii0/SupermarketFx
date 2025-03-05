@@ -14,6 +14,7 @@ public class Customer {
     @Id
     @Column(name = "customer_id")
     private String customerId;
+    @Column(name = "name")
     private String name;
     private String nic;
     private String email;

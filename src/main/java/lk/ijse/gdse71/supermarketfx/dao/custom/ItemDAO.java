@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ItemDAO extends CrudDAO<Item> {
-     List<Item> getAllItemIds() throws SQLException;
+     List<String> getAllItemIds() throws SQLException;
      Optional<Item> findById(String selecteItemId) throws SQLException;
      boolean reduceQty(OrderDetailsDto orderDetailsDto) throws SQLException ;
      boolean updateItemWithOrder(Session session,Item item);

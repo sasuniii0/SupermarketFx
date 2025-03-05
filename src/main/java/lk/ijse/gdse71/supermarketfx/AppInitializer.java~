@@ -100,8 +100,8 @@ public class AppInitializer extends Application {
 
         OrderDetailsDto orderDetailDAO = new OrderDetailsDto();
         orderDetailDAO.setOrderId(orderId);
-        orderDetailDAO.setItemId("I001");
-        orderDetailDAO.setPrice(5);
+        orderDetailDAO.setItemId("I003");
+        orderDetailDAO.setPrice(10);
 
         ArrayList<OrderDetailsDto> orderDetailsDtos = new ArrayList<>();
         orderDetailsDtos.add(orderDetailDAO);

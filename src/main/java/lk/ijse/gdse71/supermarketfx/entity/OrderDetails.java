@@ -5,8 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
-@Setter
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -29,6 +28,6 @@ public class OrderDetails {
     @Column
     private int qtyOnHand;
 
-    @Column
+    @Column(name = "unit_price")
     private BigDecimal price;
 }

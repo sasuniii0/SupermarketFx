@@ -4,10 +4,10 @@ package lk.ijse.gdse71.supermarketfx.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -17,13 +17,13 @@ public class Item {
     @Column(name = "item_id")
     private String itemId;
 
-    @Column(length = 100)
-    private String name;
+    @Column(length = 100 , name = "name")
+    private String itemName;
     private int quantity;
 
-    @Column(name = "unit_price")
-    private BigDecimal unitPrice;
+    @Column(name = "price")
+    private double unitPrice;
 
-    /*@OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
-    private List<OrderDetails> orderDetailsList;*/
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    private List<OrderDetails> orderDetailsList;
 }
