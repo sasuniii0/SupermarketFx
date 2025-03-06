@@ -15,24 +15,13 @@ public class OrderDetailsDAOImpl implements OrderDetailDAO {
     }
 
     public boolean save(OrderDetails entity) throws SQLException {
-         return SQLUtil.execute(
-                 "INSERT INTO OrderDetails (order_id, item_id, quantity, price) VALUES (?, ?, ?, ?)",
-                 entity.getOrder(),
-                 entity.getItem(),
-                 entity.getQtyOnHand(),
-                 entity.getPrice()
-         );
+        return false;
     }
 
     @Override
     public String getLastId() throws SQLException {
         return "";
     }
-
-    /*@Override
-    public String getNextId() throws SQLException {
-        return "";
-    }*/
 
     @Override
     public boolean delete(String id) throws SQLException {

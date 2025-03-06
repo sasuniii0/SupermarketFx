@@ -106,26 +106,19 @@ public class CustomerDAOImpl implements CustomerDAO {
         return customerIds;*/
     }
     public Optional<Customer> findById(String selectedCustId) throws SQLException {
-        Session session = factoryConfiguration.getSession();
-        Customer customer = session.get(Customer.class, selectedCustId);
-        session.close();
-        if (customer== null){
+        if (selectedCustId == null || selectedCustId.trim().isEmpty()) {
+            System.err.println("Invalid Customer ID: " + selectedCustId); // Debugging
+            return Optional.empty(); // Return empty to avoid error
+        }
+
+        try (Session session = factoryConfiguration.getSession()) {
+            Customer customer = session.get(Customer.class, selectedCustId);
+            return Optional.ofNullable(customer);
+        } catch (Exception e) {
             return Optional.empty();
         }
-        return Optional.of(customer);
-
-        /*ResultSet rst = SQLUtil.execute("select * from Customer where customer_id=?", selectedCustId);
-
-        if (rst.next()) {
-            return new CustomerDto(
-                    rst.getString(1),
-                    rst.getString(2),
-                    rst.getString(3),
-                    rst.getString(4),
-                    rst.getString(5));
-        }
-        return null;*/
     }
+
 
     public boolean delete(String customerId) throws SQLException {
         // apply orm to layered project

@@ -176,6 +176,8 @@ public class ItemController implements Initializable {
         TxtQuantity.setText("");
     }
 
+    ItemDAOImpl itemDAOImpl = new ItemDAOImpl();
+
     private void loadTableData() throws SQLException {
         ArrayList<ItemDto> itemDtos = itemBO.getAllItems();
 

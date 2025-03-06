@@ -38,6 +38,7 @@ public class ItemDAOImpl implements ItemDAO {
             Item item = session.get(Item.class, selecteItemId);
             return Optional.ofNullable(item);
         } catch (Exception e) {
+            e.printStackTrace(); // Print full error details for debugging
             return Optional.empty();
         }
     }

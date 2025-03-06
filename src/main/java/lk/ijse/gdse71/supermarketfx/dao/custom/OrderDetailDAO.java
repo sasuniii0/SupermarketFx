@@ -8,4 +8,5 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface OrderDetailDAO extends CrudDAO<OrderDetails> {
+
 }

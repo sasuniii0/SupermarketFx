@@ -26,23 +26,7 @@ public class OrderDAOImpl implements OrderDAO {
         return false;
     }
 
-    /*public String getNextId() throws SQLException {
-        ResultSet rst = SQLUtil.execute("SELECT MAX(order_id) FROM Orders");
-
-        if (rst.next()) {
-            String lastId = rst.getString(1);
-            if (lastId != null && lastId.startsWith("O")) {
-                int newIndex = Integer.parseInt(lastId.substring(1)) + 1;
-                return String.format("O%03d", newIndex);
-            }
-        }
-        return "O001";  // First order
-    }*/
-
     public String getLastId() throws SQLException {
-        /*ResultSet rst = SQLUtil.execute("SELECT MAX(order_id) FROM Orders");
-        return rst.next() ? rst.getString(1) : null;*/
-
         Session session = factoryConfiguration.getSession();
         try{
             Query<String> query = session.createQuery("SELECT MAX(o.orderId) FROM Order o", String.class);
@@ -57,19 +41,6 @@ public class OrderDAOImpl implements OrderDAO {
         }
     }
 
-    /*public String getNextId() throws SQLException {
-        ResultSet rst = SQLUtil.execute("select order_id from Orders order by order_id desc limit 1");
-
-        if (rst.next()) {
-            String lastId = rst.getString(1);
-            String subString = lastId.substring(1);
-            int i = Integer.parseInt(subString);
-            int newIndex = i+1;
-            return String.format("0%03d", newIndex);
-        }
-        return "O001";
-    }*/
-
     @Override
     public boolean delete(String id) throws SQLException {
         return false;
@@ -79,11 +50,22 @@ public class OrderDAOImpl implements OrderDAO {
     public boolean update(Order dto) throws SQLException {
         return false;
     }
-    public Optional<Order> findById(String id){
-        Session session = FactoryConfiguration.getInstance().getSession();
-        Order order = session.get(Order.class, id);
-        return Optional.of(order);
+    public Optional<Order> findById(String id) {
+        if (id == null || id.trim().isEmpty()) {
+            System.err.println("Invalid ID: " + id); // Debugging statement
+            return Optional.empty(); // Return empty if ID is invalid
+        }
+
+        try (Session session = FactoryConfiguration.getInstance().getSession()) {
+            Order order = session.get(Order.class, id);
+            return Optional.ofNullable(order);
+        } catch (Exception e) {
+            e.printStackTrace(); // Print the exact error for debugging
+            return Optional.empty();
+        }
     }
+
+
 
     @Override
     public boolean saveOrderWithOrderDetails(Session session, Order order) {

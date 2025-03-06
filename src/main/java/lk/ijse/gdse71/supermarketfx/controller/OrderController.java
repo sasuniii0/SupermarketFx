@@ -174,6 +174,7 @@ public class OrderController implements Initializable {
         String customerId = CmbCustId.getValue();
 
         ArrayList<OrderDetailsDto> orderDetailsDtos = new ArrayList<>();
+        System.out.println(cartTms);
 
         for (CartTm cartTm: cartTms){
             OrderDetailsDto orderDetailsDto = new OrderDetailsDto(
@@ -190,7 +191,7 @@ public class OrderController implements Initializable {
                 dateofOrder,
                 orderDetailsDtos
         );
-        //boolean isSaved = orderModel.saveOrder(orderDto);
+        System.out.println(orderDto);
         boolean isSaved = placeOrderBO.saveOrder(orderDto);
 
         if (isSaved){
@@ -262,7 +263,7 @@ public class OrderController implements Initializable {
     private void loadItemId() throws SQLException {
         List<String> itemIds = itemBO.getAllItemIds();
         ObservableList<String> observableList = FXCollections.observableArrayList();
-        observableList.addAll(String.valueOf(itemIds));
+        observableList.addAll(itemIds);
         CmbItemId.setItems(observableList);
     }
 

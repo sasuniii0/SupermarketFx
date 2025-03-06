@@ -55,45 +55,18 @@ public class PlacePlaceOrderBOImpl implements PlaceOrderBO {
 
 
     public boolean saveOrder(OrderDto orderDto) throws SQLException {
-        /*Connection connection = DBConnection.getInstance().getConnection();
-        try{
-            connection.setAutoCommit(false);
-
-            ResultSet rs = SQLUtil.execute("SELECT order_id FROM Orders WHERE order_id = ?", orderDto.getOrderId());
-            if (rs.next()) {
-                throw new SQLException("Duplicate Order ID: " + orderDto.getOrderId());
-            }
-
-            boolean isOrderSaved = SQLUtil.execute("insert into Orders values (?,?,?)",
-                    orderDto.getOrderId(),
-                    orderDto.getCustomerId(),
-                    orderDto.getOrderDate()
-            );
-            if(isOrderSaved){
-                boolean isOrderDetailsSaved = saveOrderDetailsList(orderDto.getOrderDetailsDtos());
-                if(isOrderDetailsSaved){
-                    connection.commit();
-                    return true;
-                }
-
-            }
-            connection.rollback();
-            return false;
-        } catch (Exception e) {
-            connection.rollback();
-            e.printStackTrace();
-            return false;
-        }finally {
-            connection.setAutoCommit(true);
-        }*/
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
+        System.out.println(orderDto);
 
         try{
             //save order,order details, update item
             String orderId = orderDto.getOrderId();
+            System.out.println(orderId);
+
             // check order id exist
             Optional<Order> byId = orderDAO.findById(orderId);
+            System.out.println(byId);
             if (byId.isPresent()){
                 transaction.rollback();
                 return false;
@@ -179,7 +152,7 @@ public class PlacePlaceOrderBOImpl implements PlaceOrderBO {
         }
     }
 
-    public boolean saveOrderDetailsList(ArrayList<OrderDetailsDto> orderDetailsDtos) throws SQLException {
+   /* public boolean saveOrderDetailsList(ArrayList<OrderDetailsDto> orderDetailsDtos) throws SQLException {
         for (OrderDetailsDto orderDetailsDto : orderDetailsDtos) {
             boolean isOrderDetailsSaved = saveOrderDetail(orderDetailsDto);
 
@@ -192,16 +165,16 @@ public class PlacePlaceOrderBOImpl implements PlaceOrderBO {
             }
         }
         return true;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean saveOrderDetail(OrderDetailsDto orderDetailsDto) throws SQLException {
-        /*return orderDetailDAO.save(new OrderDetails(
+        *//*return orderDetailDAO.save(new OrderDetails(
                 orderDetailsDto.getOrderId(),
                 orderDetailsDto.getItemId(),
                 orderDetailsDto.getQtyOnHand(),
                 orderDetailsDto.getPrice()
-        ));*/
+        ));*//*
         return false;
-    }
+    }*/
 }
